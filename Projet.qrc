@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/Projet">
+        <file>image echec/Chess_kdt60.png</file>
+        <file>image echec/Chess_klt60.png</file>
+        <file>image echec/Chess_pdt60.png</file>
+        <file>image echec/Chess_plt60.png</file>
+        <file>image echec/Chess_rdt60.png</file>
+        <file>image echec/Chess_rlt60.png</file>
+    </qresource>
+</RCC>
