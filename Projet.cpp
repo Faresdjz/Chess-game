@@ -123,17 +123,14 @@ namespace chessui {
                 buttons[elem.first][elem.second]->setStyleSheet(" ");
             }
 
-            //si on rappuie sur notre case, on peut rejouer
-            if (board.items[row][col] == board.items[selectedRow][selectedCol]) {
-                playerTurn = !playerTurn;
-            }
 
-            //si la case est vide ou si la case correspond a une position dans le vecteur de position
+            //si la case correspond a une position dans le vecteur de position
             if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
 
                 //on swap, donc delete un et deplacer lautre
-                board.items[row][col]->piece = board.items[selectedRow][selectedCol]->piece;
-                board.items[selectedRow][selectedCol]->piece = nullptr;
+                board.movePiece(selectedRow, selectedCol, row, col);
+                //board.items[row][col]->piece = board.items[selectedRow][selectedCol]->piece;
+                //board.items[selectedRow][selectedCol]->piece = nullptr;
 
                 //on reset le boutton initiale
                 buttons[selectedRow][selectedCol]->setIcon(QIcon(" "));
@@ -143,6 +140,11 @@ namespace chessui {
                 board.items[row][col]->piece->setPosition(row, col, board.items);
 
             }
+            //si on rappuie sur une case invalide, on peut rejouer
+            else {
+                playerTurn = !playerTurn;
+            }
+
 
             buttons[selectedRow][selectedCol]->setStyleSheet("");
             isSelected = false;

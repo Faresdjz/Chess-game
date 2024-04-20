@@ -26,6 +26,7 @@ namespace chesslogic {
 		void setPossiblePosition(Square* items[8][8]);
 
 		bool color;
+		bool isSafe = true;
 		TYPE type;
 		int i_;
 		int j_;

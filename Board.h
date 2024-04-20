@@ -10,6 +10,8 @@ public:
 
 	void updateGame();
 
+	void movePiece(int oldX, int oldY, int newX, int newY);
+
 	int nKings;
 	int nBishops;
 	int nRooks;

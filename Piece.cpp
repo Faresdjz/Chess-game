@@ -26,40 +26,40 @@ namespace chesslogic {
 
 		switch (type) {
 		case TYPE::king:
-			for (int i = -1; i <= 1; i++) {
-				for (int j = -1; j <= 1; j++) {
-					if (i != 0 || j != 0) {
-
-						int newX = i_ + i;
-						int newY = j_ + j;
-
-						if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-							if (items[newX][newY]->piece == nullptr || items[newX][newY]->piece->color != color) {
-
-								possiblePosition.push_back(make_pair(newX, newY));
-							}
-						}
+			// Le roi peut se déplacer dans un rayon de 1 case dans toutes les directions
+			for (int dx = -1; dx <= 1; dx++) {
+				for (int dy = -1; dy <= 1; dy++) {
+					if (dx == 0 && dy == 0) {
+						continue; // Ignorer la position actuelle du roi
 					}
-				}
-			}
-			//verifier les cases qui sont en mise en echec
-			//on verifie si, pour tout possiblePosition, cette position n'est pas dans possiblePosition d'une autre piece quelconque
-			for (const auto& elem : possiblePosition) {
-				for (int i = 0; i < 8; i++) {
-					for (int j = 0; j < 8; j++) {
-						if (items[i][j]->piece != nullptr) {
-							if (items[i][j]->piece->color != color) {
-								if (find(items[i][j]->piece->possiblePosition.begin(), items[i][j]->piece->possiblePosition.end(), elem) != items[i][j]->piece->possiblePosition.end()) { //si on a trouve elem dans une des possibilite des pieces
-									possiblePosition.erase(remove(possiblePosition.begin(), possiblePosition.end(), elem), possiblePosition.end());
+
+					int newX = i_ + dx;
+					int newY = j_ + dy;
+
+					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+						if (items[newX][newY]->piece == nullptr || items[newX][newY]->piece->color != color) {
+							// Vérifiez que la position ne met pas le roi en échec
+							isSafe = true;
+							for (int i = 0; i < 8; i++) {
+								for (int j = 0; j < 8; j++) {
+									if (items[i][j]->piece && items[i][j]->piece->color != color) {
+										auto& enemyPositions = items[i][j]->piece->possiblePosition;
+										if (std::find(enemyPositions.begin(), enemyPositions.end(), std::make_pair(newX, newY)) != enemyPositions.end()) {
+											isSafe = false; // La position est dangereuse
+											break;
+										}
+									}
 								}
 							}
+
+							possiblePosition.push_back(std::make_pair(newX, newY));
+							
 						}
 					}
 				}
 			}
-
-
 			break;
+
 		case TYPE::bishop: {
 			vector<pair<int, int>> direction = { {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
 			for (const auto& cod : direction) {

@@ -38,3 +38,11 @@ void Board::updateGame() {
         }
     }
 }
+
+void Board::movePiece(int oldX, int oldY, int newX, int newY) {
+
+    //board.items[row][col]->piece = board.items[selectedRow][selectedCol]->piece;
+    //board.items[selectedRow][selectedCol]->piece = nullptr;
+    items[newX][newY]->piece = items[oldX][oldY]->piece;
+    items[oldX][oldY]->piece = nullptr;
+}
