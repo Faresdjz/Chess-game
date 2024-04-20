@@ -39,7 +39,7 @@ namespace chesslogic {
 					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
 						if (items[newX][newY]->piece == nullptr || items[newX][newY]->piece->color != color) {
 							// Vérifiez que la position ne met pas le roi en échec
-							isSafe = true;
+							bool isSafe = true;
 							for (int i = 0; i < 8; i++) {
 								for (int j = 0; j < 8; j++) {
 									if (items[i][j]->piece && items[i][j]->piece->color != color) {
@@ -51,13 +51,24 @@ namespace chesslogic {
 									}
 								}
 							}
-
-							possiblePosition.push_back(std::make_pair(newX, newY));
+							if (isSafe) {
+								possiblePosition.push_back(std::make_pair(newX, newY));
+							}
+							else {
+								possiblePosition.push_back(std::make_pair(newX, newY));
+								dangerousPosition.push_back(std::make_pair(newX, newY));
+							}
 							
 						}
 					}
 				}
 			}
+
+			if (std::find(dangerousPosition.begin(), dangerousPosition.end(), std::make_pair(i_, j_)) != dangerousPosition.end()) {
+				isCheck = true;
+			}
+
+
 			break;
 
 		case TYPE::bishop: {

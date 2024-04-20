@@ -26,11 +26,12 @@ namespace chesslogic {
 		void setPossiblePosition(Square* items[8][8]);
 
 		bool color;
-		bool isSafe = true;
+		bool isCheck = false;
 		TYPE type;
 		int i_;
 		int j_;
 		vector<pair<int, int>> possiblePosition;
+		vector <pair<int, int>> dangerousPosition;
 
 	};
 }

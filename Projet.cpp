@@ -128,7 +128,7 @@ namespace chessui {
             if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
 
                 //on swap, donc delete un et deplacer lautre
-                board.movePiece(selectedRow, selectedCol, row, col);
+                board.moveP(selectedRow, selectedCol, row, col);
                 //board.items[row][col]->piece = board.items[selectedRow][selectedCol]->piece;
                 //board.items[selectedRow][selectedCol]->piece = nullptr;
 
@@ -138,8 +138,23 @@ namespace chessui {
                 //on set le boutton de la case choisi
                 buttons[row][col]->setIcon(selectedIcon);
                 board.items[row][col]->piece->setPosition(row, col, board.items);
+                board.updateGame();
+
+                if (board.items[row][col]->piece->isCheck) {
+                    buttons[row][col]->setStyleSheet("QPushButton { background-color: red; }");
+                    board.moveP(row, col, selectedRow, selectedCol);
+                    buttons[row][col]->setIcon(QIcon(" "));
+                    buttons[selectedRow][selectedCol]->setIcon(selectedIcon);
+                    board.items[selectedRow][selectedCol]->piece->setPosition(selectedRow, selectedCol, board.items);
+                    playerTurn = !playerTurn;
+                    board.items[selectedRow][selectedCol]->piece->isCheck = false;
+                    board.updateGame();
+                }
 
             }
+
+
+
             //si on rappuie sur une case invalide, on peut rejouer
             else {
                 playerTurn = !playerTurn;
