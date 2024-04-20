@@ -13,7 +13,7 @@ Board::Board() {
 
 void Board::addPiece(int i, int j, TYPE type, bool color) {
 
-    items[i][j]->piece = new Piece(color, type, i, j, items);
+    items[i][j]->piece = new chesslogic::Piece(color, type, i, j, items);
 
     //throw
     switch (type) {
