@@ -8,12 +8,12 @@ public:
 
 	void addPiece(int i, int j, TYPE type, bool color);
 
-	void updateGame();
+	void updateGame(Square* square);
 
-	void moveP(int oldX, int oldY, int newX, int newY);
+	void movePiece(int oldX, int oldY, int newX, int newY);
 
-	int nKings;
-	int nBishops;
-	int nRooks;
+	int nKings=0;
+	int nBishops=0;
+	int nRooks=0;
 	Square* items[8][8];
 };

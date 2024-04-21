@@ -19,14 +19,14 @@ namespace chessui {
 
         void setNewGame();
 
-        void movePiece(int row, int col);
+        void play(int row, int col);
 
-        void updateText();
+        void addPieceUi(int i, int j, TYPE type, bool color );
+
 
         QLabel* label;
         QPushButton* buttons[8][8];
         Board board;
-        GAMESTATE gameState = GAMESTATE::blackTurn;
         bool playerTurn = false;
         bool isSelected = false;
         int selectedRow = -1;

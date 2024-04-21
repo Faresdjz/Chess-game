@@ -1,5 +1,6 @@
 #pragma once
 #include "IncludeFile.h"
+#include "Check.h"
 #include <string>
 
 class Square;
@@ -26,7 +27,7 @@ namespace chesslogic {
 		void setPossiblePosition(Square* items[8][8]);
 
 		bool color;
-		bool isCheck = false;
+		unique_ptr<Check> isCheck;
 		TYPE type;
 		int i_;
 		int j_;

@@ -24,6 +24,7 @@ namespace chesslogic {
 
 		possiblePosition.clear();
 
+
 		switch (type) {
 		case TYPE::king:
 			// Le roi peut se déplacer dans un rayon de 1 case dans toutes les directions
@@ -65,8 +66,12 @@ namespace chesslogic {
 			}
 
 			if (std::find(dangerousPosition.begin(), dangerousPosition.end(), std::make_pair(i_, j_)) != dangerousPosition.end()) {
-				isCheck = true;
+				isCheck = make_unique<Check>();
+				//dangerousPosition.clear();
 			}
+			//else {
+			//	dangerousPosition.clear();
+			//}
 
 
 			break;

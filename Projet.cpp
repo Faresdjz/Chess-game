@@ -35,7 +35,7 @@ namespace chessui {
                 buttons[i][j] = new QPushButton();
                 buttons[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
                 gridLayout->addWidget(buttons[i][j], i, j);
-                connect(buttons[i][j], &QPushButton::clicked, [this, i, j] {movePiece(i, j); });
+                connect(buttons[i][j], &QPushButton::clicked, [this, i, j] {play(i, j); });
 
             }
         }
@@ -61,49 +61,72 @@ namespace chessui {
         iconRessources["WhiteRook"] = QIcon(WhiteRook);
     }
 
+    void Projet::addPieceUi(int i, int j, TYPE type, bool color) {
+
+
+        board.addPiece(i, j, type, color);
+
+        if (color) {
+            if (type == TYPE::king) {
+                buttons[i][j]->setIcon(iconRessources["BlackKing"]);
+            }
+            if (type == TYPE::bishop) {
+                buttons[i][j]->setIcon(iconRessources["BlackBishop"]);
+            }
+            if (type == TYPE::rook) {
+                buttons[i][j]->setIcon(iconRessources["BlackRook"]);
+            }
+        }
+        else {
+            if (type == TYPE::king) {
+                buttons[i][j]->setIcon(iconRessources["WhiteKing"]);
+            }
+            if (type == TYPE::bishop) {
+                buttons[i][j]->setIcon(iconRessources["WhiteBishop"]);
+            }
+            if (type == TYPE::rook) {
+                buttons[i][j]->setIcon(iconRessources["WhiteRook"]);
+            }
+        }
+
+        
+    }
+
     void Projet::setNewGame() {
 
         loadRessources();
 
-        //try catch
-
-        buttons[7][3]->setIcon(iconRessources["BlackKing"]);
-        board.addPiece(7, 3, TYPE::king, false);
-
-        buttons[7][4]->setIcon(iconRessources["BlackBishop"]);
-        board.addPiece(7, 4, TYPE::bishop, false);
-
-        buttons[7][2]->setIcon(iconRessources["BlackRook"]);
-        board.addPiece(7, 2, TYPE::rook, false);
-
-        buttons[0][3]->setIcon(iconRessources["WhiteKing"]);
-        board.addPiece(0, 3, TYPE::king, true);
-
-        buttons[0][4]->setIcon(iconRessources["WhiteBishop"]);
-        board.addPiece(0, 4, TYPE::bishop, true);
-
-        buttons[0][2]->setIcon(iconRessources["WhiteRook"]);
-        board.addPiece(0, 2, TYPE::rook, true);
-
+        try {
+            addPieceUi(7, 4, TYPE::king, false);
+            addPieceUi(0, 4, TYPE::king, true);
+            addPieceUi(7, 2, TYPE::bishop, false);
+            addPieceUi(0, 2, TYPE::bishop, true);
+            addPieceUi(7, 3, TYPE::rook, false);
+            addPieceUi(0, 3, TYPE::rook, true);
+        }
+        catch (const std::runtime_error& erreur) {
+            cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board.nKings;
+        }
 
     }
 
-    void Projet::movePiece(int row, int col) {
+    void Projet::play(int row, int col) {
+
+
 
         if (!isSelected) { //premier appui
-            board.updateGame();
             if (board.items[row][col]->piece != nullptr) {
+
                 if (playerTurn == board.items[row][col]->piece->color) {
+
+
+                    board.updateGame(board.items[row][col]);
 
                     selectedRow = row;
                     selectedCol = col;
                     selectedIcon = buttons[row][col]->icon();
                     isSelected = true;
                     playerTurn = !playerTurn;
-                    updateText();
-
-
-
 
                     //on highlight la case selectionne
                     buttons[row][col]->setStyleSheet("QPushButton { background-color: yellow; }");
@@ -113,7 +136,6 @@ namespace chessui {
                     }
 
                 }
-
             }
         }
         else { //deuxieme appui
@@ -123,14 +145,14 @@ namespace chessui {
                 buttons[elem.first][elem.second]->setStyleSheet(" ");
             }
 
+            board.updateGame(board.items[selectedRow][selectedCol]);
+
 
             //si la case correspond a une position dans le vecteur de position
             if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
 
                 //on swap, donc delete un et deplacer lautre
-                board.moveP(selectedRow, selectedCol, row, col);
-                //board.items[row][col]->piece = board.items[selectedRow][selectedCol]->piece;
-                //board.items[selectedRow][selectedCol]->piece = nullptr;
+                board.movePiece(selectedRow, selectedCol, row, col);
 
                 //on reset le boutton initiale
                 buttons[selectedRow][selectedCol]->setIcon(QIcon(" "));
@@ -138,19 +160,32 @@ namespace chessui {
                 //on set le boutton de la case choisi
                 buttons[row][col]->setIcon(selectedIcon);
                 board.items[row][col]->piece->setPosition(row, col, board.items);
-                board.updateGame();
 
+                board.items[row][col]->piece->dangerousPosition.clear();
+                board.updateGame(board.items[row][col]);
+
+                //si c'est un roi et qu'il est en echec, on fait le raii
                 if (board.items[row][col]->piece->isCheck) {
-                    buttons[row][col]->setStyleSheet("QPushButton { background-color: red; }");
-                    board.moveP(row, col, selectedRow, selectedCol);
+
+                    //on deplace la piece vers sa position original
+                    board.movePiece(row, col, selectedRow, selectedCol);
+
+                    //on supprime les icones
                     buttons[row][col]->setIcon(QIcon(" "));
                     buttons[selectedRow][selectedCol]->setIcon(selectedIcon);
-                    board.items[selectedRow][selectedCol]->piece->setPosition(selectedRow, selectedCol, board.items);
-                    playerTurn = !playerTurn;
-                    board.items[selectedRow][selectedCol]->piece->isCheck = false;
-                    board.updateGame();
-                }
 
+                    //on rejoue
+                    playerTurn = !playerTurn;
+
+                    //on renitialise le bool check
+                    board.items[selectedRow][selectedCol]->piece->dangerousPosition.clear();
+                    board.updateGame(board.items[selectedRow][selectedCol]);
+                    board.items[selectedRow][selectedCol]->piece->isCheck.reset();
+
+                    for (const auto& elem : board.items[selectedRow][selectedCol]->piece->dangerousPosition) {
+                        buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: red; }");
+                    }
+                }
             }
 
 
@@ -168,14 +203,5 @@ namespace chessui {
     }
 
 
-    void Projet::updateText() {
-        if (playerTurn == true) {
-            delete label;
-            label = new QLabel("white's turn");
-        }
-        else {
-            delete label;
-            label = new QLabel("black's turn");
-        }
-    }
+
 }
