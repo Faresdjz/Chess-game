@@ -1,8 +1,6 @@
 #include "Projet.h"
 
-
-namespace chessui {
-
+namespace chessui{
 
     Projet::Projet(QWidget* parent)
         : QMainWindow(parent)
@@ -11,13 +9,13 @@ namespace chessui {
 
         board = Board();
 
-        //creation d'un widget
+        //creation dun widget
         QWidget* windowGrid = new QWidget;
         QWidget* windowText = new QWidget;
 
         label = new QLabel("Player 1's turn");
 
-        //creation d'un layout
+        //creation dun layout
         QHBoxLayout* box = new QHBoxLayout;
         QGridLayout* gridLayout = new QGridLayout;
         QVBoxLayout* textLayout = new QVBoxLayout;
@@ -29,7 +27,7 @@ namespace chessui {
         windowText->setLayout(textLayout);
 
 
-        //création de la grille de boutton
+        //creation de la grille de boutton
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 buttons[i][j] = new QPushButton();
@@ -52,7 +50,7 @@ namespace chessui {
 
     void Projet::loadRessources() {
 
-        //tentative pour éviter de load les icons durant le code
+        //tentative pour eviter de load les icons durant le code
         iconRessources["BlackKing"] = QIcon(BlackKing);
         iconRessources["BlackBishop"] = QIcon(BlackBishop);
         iconRessources["BlackRook"] = QIcon(BlackRook);
@@ -105,7 +103,7 @@ namespace chessui {
             addPieceUi(0, 3, TYPE::rook, true);
         }
         catch (const std::runtime_error& erreur) {
-            cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board.nKings;
+            std::cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board.nKings;
         }
 
     }
@@ -140,7 +138,7 @@ namespace chessui {
         }
         else { //deuxieme appui
 
-            //on eteint les cases jaunes proposées
+            //on eteint les cases jaunes proposees
             for (const auto& elem : board.items[selectedRow][selectedCol]->piece->possiblePosition) {
                 buttons[elem.first][elem.second]->setStyleSheet(" ");
             }
@@ -164,8 +162,8 @@ namespace chessui {
                 board.items[row][col]->piece->dangerousPosition.clear();
                 board.updateGame(board.items[row][col]);
 
-                //si c'est un roi et qu'il est en echec, on fait le raii
-                if (board.items[row][col]->piece->isCheck) {
+                //si cest un roi et qu'il est en echec on fait le raii
+                if (board.items[row][col]->piece->isCheck!=nullptr) {
 
                     //on deplace la piece vers sa position original
                     board.movePiece(row, col, selectedRow, selectedCol);
@@ -190,7 +188,7 @@ namespace chessui {
 
 
 
-            //si on rappuie sur une case invalide, on peut rejouer
+            //si on rappuie sur une case invalide on peut rejouer
             else {
                 playerTurn = !playerTurn;
             }

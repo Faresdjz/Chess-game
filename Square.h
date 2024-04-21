@@ -15,7 +15,7 @@ public:
 	}
 
 
-	bool isPlayable(vector <pair<int, int>> possiblePosition);
+	bool isPlayable(std::vector <std::pair<int, int>> possiblePosition);
 
 	chesslogic::Piece* piece = nullptr;
 	int i_ = -1;

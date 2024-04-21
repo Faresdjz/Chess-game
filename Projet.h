@@ -32,7 +32,7 @@ namespace chessui {
         int selectedRow = -1;
         int selectedCol = -1;
         QIcon selectedIcon;
-        QMap<string, QIcon> iconRessources;
+        QMap<std::string, QIcon> iconRessources;
 
     private:
         Ui::ProjetClass ui;

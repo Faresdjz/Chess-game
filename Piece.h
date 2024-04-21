@@ -7,11 +7,6 @@ class Square;
 
 namespace chesslogic {
 
-
-	using namespace std;
-
-
-
 	class Piece {
 	public:
 		Piece(bool color, TYPE type, Square* items[8][8]);
@@ -27,12 +22,12 @@ namespace chesslogic {
 		void setPossiblePosition(Square* items[8][8]);
 
 		bool color;
-		unique_ptr<Check> isCheck;
+		std::unique_ptr<Check> isCheck;
 		TYPE type;
 		int i_;
 		int j_;
-		vector<pair<int, int>> possiblePosition;
-		vector <pair<int, int>> dangerousPosition;
+		std::vector<std::pair<int, int>> possiblePosition;
+		std::vector <std::pair<int, int>> dangerousPosition;
 
 	};
 }
