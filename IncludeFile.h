@@ -1,3 +1,12 @@
+/**
+* Fichier incluant toutes les bibliothèques nécessaires à la réalisation du programme et déclarant l'enum class des types de pièces.
+
+* \file   IncludeFile.h
+* \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
+* \date   21 avril 2024
+* Créé le 13 avril 2024
+*/
+
 #pragma once
 
 #include <iostream>

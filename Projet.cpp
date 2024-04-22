@@ -1,3 +1,12 @@
+/**
+* Fichier définissant les différentes fonctions de la classe Projet nécessaires à la création et l'affichage de l'interface du jeu d'échecs et à l'agencement et au bon fonctionnement des boutons présents sur cette dernière.
+
+* \file   Projet.cpp
+* \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
+* \date   21 avril 2024
+* Créé le 13 avril 2024
+*/
+
 #include "Projet.h"
 
 namespace chessui{

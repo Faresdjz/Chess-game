@@ -1,3 +1,13 @@
+/**
+* Fichier déclarant la classe Piece ainsi que ses fonctions permettant de créer une pièce et ses attributs et de définir ses potentiels mouvements dépendamment de son type. 
+
+
+* \file   Piece.h
+* \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
+* \date   21 avril 2024
+* Créé le 13 avril 2024
+*/
+
 #pragma once
 #include "IncludeFile.h"
 #include "Check.h"
