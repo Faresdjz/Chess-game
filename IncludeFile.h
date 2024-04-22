@@ -12,6 +12,9 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <string.h>
+#include <memory>
+
 #include <QtWidgets/QApplication>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -22,16 +25,15 @@
 #include <QIcon>
 #include <Qstring>
 #include <QMap>
-#include <string.h>
-#include <memory>
-#include "ui_Projet.h"
 
+#include "ui_Projet.h"
+//#include "bibliotheque_cours/bibliotheque_cours.hpp"
+//#include "verification_allocation.hpp"
+//#include "debogage_memoire.hpp"
 
 enum class TYPE {
 	king, bishop, rook
 };
-
-
 
 const QString BlackKing = ":/Projet/image echec/Chess_kdt60.png";
 const QString BlackRook = ":/Projet/image echec/Chess_rdt60.png";
