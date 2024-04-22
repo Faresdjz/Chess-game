@@ -1,10 +1,10 @@
 /**
-* Programme permettant de lancer un jeu d'échecs comportant 3 pièces, soient un roi, un fou et une tour de chaque couleur. 
+* Programme permettant de lancer un jeu d'echecs comportant 3 pieces, soient un roi, un fou et une tour de chaque couleur. 
 
 * \file   main.cpp
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
 * \date   21 avril 2024
-* Créé le 13 avril 2024
+* Cree le 13 avril 2024
 */
 
 #include "Projet.h"

@@ -1,10 +1,10 @@
 /**
-* Fichier définissant différentes fonctions de la classe Piece permettant de créer une pièce et de définir ses potentiels mouvements dépendamment de son type. 
+* Fichier definissant differentes fonctions de la classe Piece permettant de creer une piece et de definir ses potentiels mouvements dependamment de son type. 
 
 * \file   Piece.cpp
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
 * \date   21 avril 2024
-* Créé le 13 avril 2024
+* Cree le 13 avril 2024
 */
 
 #include "Piece.h"

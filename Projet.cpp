@@ -1,10 +1,10 @@
 /**
-* Fichier définissant les différentes fonctions de la classe Projet nécessaires à la création et l'affichage de l'interface du jeu d'échecs et à l'agencement et au bon fonctionnement des boutons présents sur cette dernière.
+* Fichier definissant les differentes fonctions de la classe Projet necessaires a la creation et l'affichage de l'interface du jeu d'echecs et a l'agencement et au bon fonctionnement des boutons presents sur cette derniere.
 
 * \file   Projet.cpp
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
 * \date   21 avril 2024
-* Créé le 13 avril 2024
+* Cree le 13 avril 2024
 */
 
 #include "Projet.h"
@@ -99,6 +99,18 @@ namespace chessui{
         
     }
 
+    void Projet::setDefaultGame() {
+
+            addPieceUi(7, 4, TYPE::king, false);
+            addPieceUi(0, 4, TYPE::king, true);
+            addPieceUi(7, 2, TYPE::bishop, false);
+            addPieceUi(0, 2, TYPE::bishop, true);
+            addPieceUi(7, 3, TYPE::rook, false);
+            addPieceUi(0, 3, TYPE::rook, true);
+
+    }
+
+
     void Projet::setNewGame() {
 
         loadRessources();
@@ -110,9 +122,11 @@ namespace chessui{
             addPieceUi(0, 2, TYPE::bishop, true);
             addPieceUi(7, 3, TYPE::rook, false);
             addPieceUi(0, 3, TYPE::rook, true);
+            addPieceUi(0, 7, TYPE::king, true);
         }
         catch (const std::runtime_error& erreur) {
             std::cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board.nKings;
+
         }
 
     }
@@ -208,7 +222,5 @@ namespace chessui{
 
         }
     }
-
-
 
 }

@@ -1,10 +1,10 @@
 /**
-* Fichier déclarant la classe Board et ses différentes fonctions permettant de créer le plateau d'échecs et ses attributs et de gérer l'agencement des pièces entre elles.
+* Fichier declarant la classe Board et ses differentes fonctions permettant de creer le plateau d'echecs et ses attributs et de gerer l'agencement des pieces entre elles.
 
 * \file   Board.h
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
 * \date   21 avril 2024
-* Créé le 13 avril 2024
+* Cree le 13 avril 2024
 */
 
 #pragma once

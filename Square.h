@@ -1,10 +1,10 @@
 /**
-* Fichier déclarant la classe Square permettant de créer un square (une case) et ses attributs et de déterminer si l'une des case du platea est occupée par une pièce ou non.
+* Fichier declarant la classe Square permettant de creer un square (une case) et ses attributs et de determiner si l'une des case du platea est occupee par une piece ou non.
 
 * \file   Square.h
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
 * \date   21 avril 2024
-* Créé le 13 avril 2024
+* Cree le 13 avril 2024
 */
 
 #pragma once

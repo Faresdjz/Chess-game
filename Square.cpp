@@ -1,10 +1,10 @@
 /**
-* Fichier définissant une fonction de la classe Square permettant de déterminer si l'une des case du plateau, un 'Square', est occupée par une pièce ou non.
+* Fichier definissant une fonction de la classe Square permettant de determiner si l'une des case du plateau, un 'Square', est occupee par une piece ou non.
 
 * \file   Square.cpp
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
 * \date   21 avril 2024
-* Créé le 13 avril 2024
+* Cree le 13 avril 2024
 */
 
 #include "Square.h"

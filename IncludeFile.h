@@ -1,10 +1,10 @@
 /**
-* Fichier incluant toutes les bibliothèques nécessaires à la réalisation du programme et déclarant l'enum class des types de pièces.
+* Fichier incluant toutes les bibliotheques necessaires a la realisation du programme et declarant l'enum class des types de pieces.
 
 * \file   IncludeFile.h
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
 * \date   21 avril 2024
-* Créé le 13 avril 2024
+* Cree le 13 avril 2024
 */
 
 #pragma once

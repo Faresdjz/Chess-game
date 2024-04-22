@@ -1,10 +1,10 @@
 /**
-* Fichier décrivant différentes fonctions permettant de créer le plateau d'échecs à partir d'une matrice de cases 'Square' et de gérer l'agencement des pièces entre elles. 
+* Fichier decrivant differentes fonctions permettant de creer le plateau d'echecs a partir d'une matrice de cases 'Square' et de gerer l'agencement des pieces entre elles. 
 
 * \file   Board.cpp
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
 * \date   21 avril 2024
-* Créé le 13 avril 2024
+* Cree le 13 avril 2024
 */
 
 #include "Board.h"
@@ -36,7 +36,7 @@ void Board::addPiece(int i, int j, TYPE type, bool color) {
         break;
     }
 
-    if (nKings > 3) {
+    if (nKings > 2) {
         throw std::runtime_error("trop de roi");
     }
 }
