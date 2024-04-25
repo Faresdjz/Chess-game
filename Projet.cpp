@@ -179,12 +179,10 @@ namespace chessui{
                     //on highlight la case selectionne
                     buttons[row][col]->setStyleSheet("QPushButton { background-color: yellow; }");
 
+
                     for (const auto& elem : board.items[selectedRow][selectedCol]->piece->possiblePosition) {
                         buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: yellow; }");
                     }
-
-                    board.items[row][col]->piece->isCheck = false;
-                    board.items[row][col]->piece->setPossiblePosition(board.items);
                 }
             }
         }
@@ -194,34 +192,24 @@ namespace chessui{
                 buttons[elem.first][elem.second]->setStyleSheet(" ");
             }
 
-            if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
+            if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->dangerousPosition)) {
 
-                movePieceUi(selectedRow, selectedCol, row, col);
-
-                if (board.items[row][col]->piece->isCheck==true) {
-
-                    movePieceUi(row, col, selectedRow, selectedCol);
-
-                    //on rejoue
-                    playerTurn = !playerTurn;
-
-                    //on renitialise le bool check
-                    board.items[selectedRow][selectedCol]->piece->isCheck = false;
-
-                    for (const auto& elem : board.items[selectedRow][selectedCol]->piece->dangerousPosition) {
-                        buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: red; }");
-                    }
+                for (const auto& elem : board.items[selectedRow][selectedCol]->piece->dangerousPosition) {
+                    buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: red; }");
                 }
+                playerTurn = !playerTurn;
             }
 
-
+            else if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
+                movePieceUi(selectedRow, selectedCol, row, col);
+            }
 
             //si on rappuie sur une case invalide on peut rejouer
             else {
                 playerTurn = !playerTurn;
             }
 
-
+            //reset les couleurs par defaut pour le prochain tour
             buttons[selectedRow][selectedCol]->setStyleSheet("");
             isSelected = false;
 

@@ -30,9 +30,10 @@ namespace chesslogic {
 		}
 
 		void setPossiblePosition(Square* items[8][8]);
+		
+		bool isCheck();
 
 		bool color;
-		bool isCheck = false;
 		TYPE type;
 		int i_;
 		int j_;

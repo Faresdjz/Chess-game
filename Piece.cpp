@@ -27,6 +27,7 @@ namespace chesslogic {
 	void Piece::setPossiblePosition(Square* items[8][8]) {
 
 		possiblePosition.clear();
+		dangerousPosition.clear();
 
 		switch (type) {
 		case TYPE::king:
@@ -68,9 +69,9 @@ namespace chesslogic {
 				}
 			}
 
-			if (std::find(dangerousPosition.begin(), dangerousPosition.end(), std::make_pair(i_, j_)) != dangerousPosition.end()) {
-				isCheck = true;
-			}
+			//if (std::find(dangerousPosition.begin(), dangerousPosition.end(), std::make_pair(i_, j_)) != dangerousPosition.end()) {
+			//	isCheck = true;
+			//}
 			break;
 
 		case TYPE::bishop: {
@@ -113,5 +114,9 @@ namespace chesslogic {
 			break;
 
 		}
+	}
+
+	bool Piece::isCheck() {
+		return (std::find(dangerousPosition.begin(), dangerousPosition.end(), std::make_pair(i_, j_)) != dangerousPosition.end());
 	}
 }
