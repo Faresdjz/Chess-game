@@ -41,6 +41,24 @@ void Board::addPiece(int i, int j, TYPE type, bool color) {
     }
 }
 
+void Board::removePiece(int i, int j, TYPE type) {
+
+    items[i][j]->piece = nullptr;
+    delete items[i][j]->piece;
+
+    switch (type) {
+    case TYPE::king:
+        nKings--;
+        break;
+    case TYPE::bishop:
+        nBishops--;
+        break;
+    case TYPE::rook:
+        nRooks--;
+        break;
+    }
+}
+
 void Board::updateGame(Square* square) {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {

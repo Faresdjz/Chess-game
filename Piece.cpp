@@ -69,7 +69,7 @@ namespace chesslogic {
 			}
 
 			if (std::find(dangerousPosition.begin(), dangerousPosition.end(), std::make_pair(i_, j_)) != dangerousPosition.end()) {
-				isCheck = std::make_unique<Check>();
+				isCheck = true;
 			}
 			break;
 

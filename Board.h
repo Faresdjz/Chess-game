@@ -17,6 +17,8 @@ public:
 
 	void addPiece(int i, int j, TYPE type, bool color);
 
+	void removePiece(int i, int j, TYPE type);
+
 	void updateGame(Square* square);
 
 	void movePiece(int oldX, int oldY, int newX, int newY);

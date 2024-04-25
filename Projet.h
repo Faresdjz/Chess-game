@@ -32,18 +32,26 @@ namespace chessui {
 
         void addPieceUi(int i, int j, TYPE type, bool color );
 
+        void removePieceUi(int i, int j, TYPE type);
+
+        void removeAllPieceUi();
+
+        void movePieceUi(int oldX, int oldY, int newX, int newY);
+
+        void buttonSelected(int row, int col);
+
         void setDefaultGame();
 
 
         QLabel* label;
         QPushButton* buttons[8][8];
         Board board;
+        QIcon selectedIcon;
+        QMap<std::string, QIcon> iconRessources;
         bool playerTurn = false;
         bool isSelected = false;
         int selectedRow = -1;
         int selectedCol = -1;
-        QIcon selectedIcon;
-        QMap<std::string, QIcon> iconRessources;
 
     private:
         Ui::ProjetClass ui;

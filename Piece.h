@@ -32,7 +32,7 @@ namespace chesslogic {
 		void setPossiblePosition(Square* items[8][8]);
 
 		bool color;
-		std::unique_ptr<Check> isCheck;
+		bool isCheck = false;
 		TYPE type;
 		int i_;
 		int j_;
