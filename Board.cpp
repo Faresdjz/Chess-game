@@ -83,7 +83,7 @@ bool Board::checkGameSituation(bool color) {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             if (items[i][j]->piece) {
-                if (items[i][j]->piece->color == color && items[i][j]->piece->isCheck == true) {
+                if (items[i][j]->piece->color != color && items[i][j]->piece->isCheck == true) {
                     std::cout << "en echec";
                     return true;
                 }

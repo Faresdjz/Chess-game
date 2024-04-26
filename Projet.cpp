@@ -202,7 +202,10 @@ namespace chessui{
             }
 
             else if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
+                
                 movePieceUi(selectedRow, selectedCol, row, col);
+
+                board.updateGame(board.items[row][col]);
 
                 if (board.checkGameSituation(playerTurn)) {
                     movePieceUi(row, col, selectedRow, selectedCol);
