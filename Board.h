@@ -23,6 +23,8 @@ public:
 
 	void movePiece(int oldX, int oldY, int newX, int newY);
 
+	bool checkGameSituation(bool color);
+
 	int nKings=0;
 	int nBishops=0;
 	int nRooks=0;

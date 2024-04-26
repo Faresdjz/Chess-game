@@ -100,7 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
-    <ClInclude Include="Check.h" />
     <ClInclude Include="IncludeFile.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="Square.h" />

@@ -10,7 +10,6 @@
 
 #pragma once
 #include "IncludeFile.h"
-#include "Check.h"
 #include <string>
 
 class Square;
@@ -18,6 +17,7 @@ class Square;
 namespace chesslogic {
 
 	class Piece {
+
 	public:
 		Piece(bool color, TYPE type, Square* items[8][8]);
 
@@ -31,7 +31,9 @@ namespace chesslogic {
 
 		void setPossiblePosition(Square* items[8][8]);
 		
-		bool isCheck();
+		
+		bool isCheck;
+
 
 		bool color;
 		TYPE type;

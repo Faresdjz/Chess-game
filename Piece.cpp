@@ -28,50 +28,45 @@ namespace chesslogic {
 
 		possiblePosition.clear();
 		dangerousPosition.clear();
+		isCheck = false;
 
 		switch (type) {
 		case TYPE::king:
-			// Le roi peut se deplacer dans un rayon de 1 case dans toutes les directions
+
 			for (int dx = -1; dx <= 1; dx++) {
 				for (int dy = -1; dy <= 1; dy++) {
-					if (dx == 0 && dy == 0) {
-						continue; // Ignorer la position actuelle du roi
-					}
-
 					int newX = i_ + dx;
 					int newY = j_ + dy;
 
 					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
 						if (items[newX][newY]->piece == nullptr || items[newX][newY]->piece->color != color) {
-							// Verifiez que la position ne met pas le roi en echec
 							bool isSafe = true;
 							for (int i = 0; i < 8; i++) {
 								for (int j = 0; j < 8; j++) {
 									if (items[i][j]->piece && items[i][j]->piece->color != color) {
-										auto& enemyPositions = items[i][j]->piece->possiblePosition;
+										auto enemyPositions = items[i][j]->piece->possiblePosition;
 										if (std::find(enemyPositions.begin(), enemyPositions.end(), std::make_pair(newX, newY)) != enemyPositions.end()) {
-											isSafe = false; // La position est dangereuse
+											isSafe = false;
 											break;
 										}
+										if (std::find(enemyPositions.begin(), enemyPositions.end(), std::make_pair(i_, j_)) != enemyPositions.end()) {
+											isCheck = true;
+										}
 									}
+
 								}
 							}
 							if (isSafe) {
 								possiblePosition.push_back(std::make_pair(newX, newY));
 							}
 							else {
-								possiblePosition.push_back(std::make_pair(newX, newY));
 								dangerousPosition.push_back(std::make_pair(newX, newY));
 							}
-							
 						}
 					}
 				}
 			}
 
-			//if (std::find(dangerousPosition.begin(), dangerousPosition.end(), std::make_pair(i_, j_)) != dangerousPosition.end()) {
-			//	isCheck = true;
-			//}
 			break;
 
 		case TYPE::bishop: {
@@ -84,8 +79,14 @@ namespace chesslogic {
 						if (items[newX][newY]->piece) {
 							if (items[newX][newY]->piece->color != color) {
 								possiblePosition.push_back(std::make_pair(newX, newY)); // Capture possible
+								if (items[newX][newY]->piece->type != TYPE::king) {
+									break; // Blocage par une piece, arret dans cette direction
+								}
 							}
-							break; // Blocage par une piece, arret dans cette direction
+							else {
+								break;
+							}
+
 						}
 						possiblePosition.push_back(std::make_pair(newX, newY));
 					}
@@ -104,8 +105,14 @@ namespace chesslogic {
 						if (items[newX][newY]->piece) {
 							if (items[newX][newY]->piece->color != color) {
 								possiblePosition.push_back(std::make_pair(newX, newY)); // Capture possible
+								if (items[newX][newY]->piece->type != TYPE::king) {
+									break; // Blocage par une piece, arret dans cette direction
+								}
 							}
-							break; // Blocage par une piece, arret dans cette direction
+							else {
+								break;
+							}
+
 						}
 						possiblePosition.push_back(std::make_pair(newX, newY));
 					}
@@ -116,7 +123,25 @@ namespace chesslogic {
 		}
 	}
 
-	bool Piece::isCheck() {
-		return (std::find(dangerousPosition.begin(), dangerousPosition.end(), std::make_pair(i_, j_)) != dangerousPosition.end());
-	}
 }
+
+
+
+
+
+
+
+
+
+//reset tous les vecteurs des pieces du joueur concerne
+//faire en sorte d'ajouter que les positions qui fait en sorte que le roi ne soit pas en echec
+
+
+
+//faire un autre switch case specifique pour la situation dechec
+
+
+
+//move piece
+	//if king of same color as piece is in dangerous place
+	//moveback piece

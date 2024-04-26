@@ -120,8 +120,7 @@ namespace chessui{
         board.movePiece(oldX, oldY, newX, newY);
         buttons[oldX][oldY]->setIcon(QIcon(" "));
         buttons[newX][newY]->setIcon(selectedIcon);
-        board.items[newX][newY]->piece->dangerousPosition.clear();
-        board.items[newX][newY]->piece->setPossiblePosition(board.items);
+        //board.items[newX][newY]->piece->setPossiblePosition(board.items);
 
     }
 
@@ -168,6 +167,7 @@ namespace chessui{
 
     void Projet::play(int row, int col) {
 
+
         if (!isSelected) { //premier appui
             if (board.items[row][col]->piece != nullptr) {
                 if (playerTurn == board.items[row][col]->piece->color) {
@@ -177,13 +177,14 @@ namespace chessui{
                     playerTurn = !playerTurn;
 
                     //on highlight la case selectionne
-                    buttons[row][col]->setStyleSheet("QPushButton { background-color: yellow; }");
+                    //buttons[row][col]->setStyleSheet("QPushButton { background-color: yellow; }");
 
 
                     for (const auto& elem : board.items[selectedRow][selectedCol]->piece->possiblePosition) {
                         buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: yellow; }");
                     }
                 }
+
             }
         }
         else { //deuxieme appui
@@ -202,6 +203,12 @@ namespace chessui{
 
             else if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
                 movePieceUi(selectedRow, selectedCol, row, col);
+
+                if (board.checkGameSituation(playerTurn)) {
+                    movePieceUi(row, col, selectedRow, selectedCol);
+                    playerTurn = !playerTurn;
+                }
+
             }
 
             //si on rappuie sur une case invalide on peut rejouer
@@ -213,7 +220,12 @@ namespace chessui{
             buttons[selectedRow][selectedCol]->setStyleSheet("");
             isSelected = false;
 
+
         }
     }
 
 }
+
+//move piece
+    //if king of same color as piece is in dangerous place
+    //moveback piece
