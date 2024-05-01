@@ -44,8 +44,13 @@ namespace chessui {
 
         void swapPlayer();
 
+        bool checkSituationUi();
 
-        QLabel* label;
+        void resetColorScheme();
+
+
+        QLabel* label1;
+        QLabel* label2;
         QPushButton* buttons[8][8];
         Board board;
         QIcon selectedIcon;

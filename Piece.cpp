@@ -45,21 +45,12 @@ namespace chesslogic {
 								for (int j = 0; j < 8; j++) {
 									if (items[i][j]->piece && items[i][j]->piece->color != color) {
 										auto enemyPositions = items[i][j]->piece->possiblePosition;
-										if (std::find(enemyPositions.begin(), enemyPositions.end(), std::make_pair(newX, newY)) != enemyPositions.end()) {
-											isSafe = false;
-											break;
-										}
+										possiblePosition.push_back(std::make_pair(newX, newY));
 										if (std::find(enemyPositions.begin(), enemyPositions.end(), std::make_pair(i_, j_)) != enemyPositions.end()) {
 											isCheck = true;
 										}
 									}
 								}
-							}
-							if (isSafe) {
-								possiblePosition.push_back(std::make_pair(newX, newY));
-							}
-							else {
-								dangerousPosition.push_back(std::make_pair(newX, newY));
 							}
 						}
 					}

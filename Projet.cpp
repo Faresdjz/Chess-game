@@ -9,7 +9,7 @@
 
 #include "Projet.h"
 
-namespace chessui{
+namespace chessui {
 
     Projet::Projet(QWidget* parent)
         : QMainWindow(parent)
@@ -22,7 +22,16 @@ namespace chessui{
         QWidget* windowGrid = new QWidget;
         QWidget* windowText = new QWidget;
 
-        label = new QLabel("Player 1's turn");
+
+
+        label1 = new QLabel("WHITE, you can play!");
+        label2 = new QLabel("");
+
+        label1->setStyleSheet("color: rgba(255, 255, 255, 0.7); font-size: 11pt;");
+        label2->setStyleSheet("color: rgba(180, 30, 30, 1); font-size: 12pt;");
+
+        label1->setAlignment(Qt::AlignCenter); // Centre le texte horizontalement et verticalement
+        label2->setAlignment(Qt::AlignCenter);
 
         //creation dun layout
         QHBoxLayout* box = new QHBoxLayout;
@@ -34,23 +43,44 @@ namespace chessui{
         ui.centralWidget->setLayout(box);
         windowGrid->setLayout(gridLayout);
         windowText->setLayout(textLayout);
-
+        //windowGrid->setStyleSheet("background-color: #333333; border: 5px solid black; border-radius: 10px;");
+        windowGrid->setContentsMargins(10, 10, 10, 10);
+        //windowGrid->setStyleSheet("background-color: #333333; border: 5px solid #2a82da; border-radius: 10px;");
 
         //creation de la grille de boutton
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 buttons[i][j] = new QPushButton();
                 buttons[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-                gridLayout->addWidget(buttons[i][j], i, j);
-                connect(buttons[i][j], &QPushButton::clicked, [this, i, j] {play(i, j); });
+                buttons[i][j]->setMinimumSize(50, 50); // Taille minimale pour chaque bouton
 
+                // Alternance de couleurs pour les cases
+                if ((i + j) % 2 == 0) {
+                    buttons[i][j]->setStyleSheet("background-color: #333333; border: 0;");
+                }
+                else {
+                    buttons[i][j]->setStyleSheet("background-color: #1C1C1E; border: 0;");
+                }
+
+                gridLayout->addWidget(buttons[i][j], i, j);
+                connect(buttons[i][j], &QPushButton::clicked, [this, i, j] { play(i, j); });
             }
         }
 
         box->addWidget(windowGrid, 2);
         box->addWidget(windowText, 1);
 
-        textLayout->addWidget(label);
+        //windowText->setStyleSheet("border: 3px solid black; border-radius: 10px;");
+        QString borderStyle = "border: 3px solid #202020; background-color: #333; ";
+
+        // Appliquer le style à windowGrid
+        windowGrid->setStyleSheet(QString("border: 7px solid #202020; background-color: #333; "));
+
+        // Appliquer le style à windowText
+        windowText->setStyleSheet(borderStyle);
+
+        textLayout->addWidget(label1);
+        textLayout->addWidget(label2);
 
     }
 
@@ -96,7 +126,7 @@ namespace chessui{
             }
         }
 
-        
+
     }
 
     void Projet::removePieceUi(int i, int j, TYPE type) {
@@ -126,7 +156,23 @@ namespace chessui{
     void Projet::swapPlayer() {
 
         playerTurn = !playerTurn;
+        if (playerTurn) {
+            label1->setText(QString("BLACK, you can play!"));
+        }
+        else {
+            label1->setText(QString("WHITE, you can play!"));
+        }
 
+    }
+
+    bool Projet::checkSituationUi() {
+
+        if (board.checkGameSituation(!playerTurn)) {
+            label2->setText(QString("CHECK"));
+            return true;
+        }
+        label2->setText(QString(""));
+        return false;
 
     }
 
@@ -171,6 +217,19 @@ namespace chessui{
 
     }
 
+    void Projet::resetColorScheme() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if ((i + j) % 2 == 0) {
+                    buttons[i][j]->setStyleSheet("background-color: #333333; border: 0;");
+                }
+                else {
+                    buttons[i][j]->setStyleSheet("background-color: #1C1C1E; border: 0;");
+                }
+            }
+        }
+    }
+
     void Projet::play(int row, int col) {
 
 
@@ -181,15 +240,12 @@ namespace chessui{
                     buttonSelected(row, col);
                     board.updateGame(board.items[row][col]);
 
-                    //on veut que le joueur puisse rejouer pour le deuxieme input
-                    swapPlayer();
-
                     //on highlight la case selectionne
-                    buttons[row][col]->setStyleSheet("QPushButton { background-color: yellow; }");
+                    buttons[row][col]->setStyleSheet("QPushButton { background-color: rgba(255, 255, 0, 0.5); border: 1px solid rgba(255, 255, 0, 0.5); }");
 
 
                     for (const auto& elem : board.items[selectedRow][selectedCol]->piece->possiblePosition) {
-                        buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: yellow; }");
+                        buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: rgba(255, 255, 0, 0.5); border: 1px solid rgba(255, 255, 0, 0.5); }");
                     }
                 }
             }
@@ -203,22 +259,18 @@ namespace chessui{
                 buttons[elem.first][elem.second]->setStyleSheet(" ");
             }
 
-            if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->dangerousPosition)) {
-
-                buttons[selectedRow][selectedCol]->setStyleSheet("QPushButton { background-color:red;}");
-                swapPlayer();
-            }
-
-            else if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
+            if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
                 
                 movePieceUi(selectedRow, selectedCol, row, col);
 
                 //verifier si le roi est en echec
                 board.updateGame(board.items[row][col]);
 
-                if (board.checkGameSituation(playerTurn)) {
+                if (checkSituationUi()) {
+
                     movePieceUi(row, col, selectedRow, selectedCol);
                     swapPlayer();
+
                 }
             }
 
@@ -228,8 +280,9 @@ namespace chessui{
             }
 
             //reset les couleurs par defaut pour le prochain tour
-            buttons[selectedRow][selectedCol]->setStyleSheet("");
             isSelected = false;
+            swapPlayer();
+            resetColorScheme();
         }
     }
 
