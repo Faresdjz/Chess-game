@@ -22,8 +22,6 @@ namespace chessui {
         QWidget* windowGrid = new QWidget;
         QWidget* windowText = new QWidget;
 
-
-
         label1 = new QLabel("WHITE, you can play!");
         label2 = new QLabel("");
 
@@ -43,9 +41,7 @@ namespace chessui {
         ui.centralWidget->setLayout(box);
         windowGrid->setLayout(gridLayout);
         windowText->setLayout(textLayout);
-        //windowGrid->setStyleSheet("background-color: #333333; border: 5px solid black; border-radius: 10px;");
         windowGrid->setContentsMargins(10, 10, 10, 10);
-        //windowGrid->setStyleSheet("background-color: #333333; border: 5px solid #2a82da; border-radius: 10px;");
 
         //creation de la grille de boutton
         for (int i = 0; i < 8; i++) {
@@ -70,18 +66,23 @@ namespace chessui {
         box->addWidget(windowGrid, 2);
         box->addWidget(windowText, 1);
 
-        //windowText->setStyleSheet("border: 3px solid black; border-radius: 10px;");
-        QString borderStyle = "border: 3px solid #202020; background-color: #333; ";
-
-        // Appliquer le style à windowGrid
         windowGrid->setStyleSheet(QString("border: 7px solid #202020; background-color: #333; "));
-
-        // Appliquer le style à windowText
-        windowText->setStyleSheet(borderStyle);
+        windowText->setStyleSheet(QString("border: 3px solid #202020; background-color: #333; "));
 
         textLayout->addWidget(label1);
         textLayout->addWidget(label2);
 
+        QComboBox* gameSelector = new QComboBox();
+        gameSelector->addItem("Default Game", QVariant(0));
+        gameSelector->addItem("Game One", QVariant(1));
+        gameSelector->addItem("Game Two", QVariant(2));
+        gameSelector->addItem("Game Three", QVariant(3));
+        textLayout->addWidget(gameSelector);
+
+        QPushButton* startButton = new QPushButton("Start Game");
+        textLayout->addWidget(startButton);
+
+        connect(startButton, &QPushButton::clicked, this, [this, gameSelector]() {setNewGame(gameSelector); });
     }
 
     Projet::~Projet()
@@ -186,29 +187,67 @@ namespace chessui {
     void Projet::setDefaultGame() {
 
         removeAllPieceUi();
-            
-        addPieceUi(7, 4, TYPE::king, false);
-        addPieceUi(0, 4, TYPE::king, true);
+
+        addPieceUi(7, 3, TYPE::king, false);
+        addPieceUi(0, 3, TYPE::king, true);
         addPieceUi(7, 2, TYPE::bishop, false);
         addPieceUi(0, 2, TYPE::bishop, true);
-        addPieceUi(7, 3, TYPE::rook, false);
-        addPieceUi(0, 3, TYPE::rook, true);
+        addPieceUi(7, 4, TYPE::rook, false);
+        addPieceUi(0, 4, TYPE::rook, true);
 
     }
+    void Projet::setGameOne(){
+        removeAllPieceUi();
+
+        addPieceUi(7, 3, TYPE::king, false);
+        addPieceUi(0, 3, TYPE::king, true);
+        addPieceUi(7, 1, TYPE::bishop, false);
+        addPieceUi(0, 1, TYPE::bishop, true);
+        addPieceUi(7, 5, TYPE::rook, false);
+        addPieceUi(0, 5, TYPE::rook, true);
+    }
+
+    void Projet::setGameTwo() {
+        removeAllPieceUi();
+
+        addPieceUi(7, 4, TYPE::king, false);
+        addPieceUi(0, 2, TYPE::king, true);
+        addPieceUi(7, 6, TYPE::bishop, false);
+        addPieceUi(0, 5, TYPE::bishop, true);
+        addPieceUi(7, 3, TYPE::rook, false);
+        addPieceUi(0, 7, TYPE::rook, true);
+    }
+
+    void Projet::setGameThree() {
+        removeAllPieceUi();
+
+        addPieceUi(7, 4, TYPE::king, false);
+        addPieceUi(0, 2, TYPE::king, true);
+        addPieceUi(7, 7, TYPE::bishop, false);
+        addPieceUi(0, 1, TYPE::bishop, true);
+        addPieceUi(7, 3, TYPE::rook, false);
+        addPieceUi(0, 5, TYPE::rook, true);
+    };
 
 
-    void Projet::setNewGame() {
+    void Projet::setNewGame(QComboBox* option) {
 
         loadRessources();
 
         try {
-            addPieceUi(7, 4, TYPE::king, false);
-            addPieceUi(0, 4, TYPE::king, true);
-            addPieceUi(7, 2, TYPE::bishop, false);
-            addPieceUi(0, 2, TYPE::bishop, true);
-            addPieceUi(7, 3, TYPE::rook, false);
-            addPieceUi(0, 3, TYPE::rook, true);
-            addPieceUi(0, 7, TYPE::king, true);
+            switch (option->currentData().toInt()) {
+            case 1:
+                setGameOne();
+                break;
+            case 2:
+                setGameTwo();
+                break;
+            case 3:
+                setGameThree();
+                break;
+            default:
+                setDefaultGame();
+            }
         }
         catch (const std::runtime_error& erreur) {
             std::cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board.nKings;

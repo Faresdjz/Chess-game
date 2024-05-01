@@ -26,7 +26,7 @@ namespace chessui {
 
         void loadRessources();
 
-        void setNewGame();
+        void setNewGame(QComboBox* option);
 
         void play(int row, int col);
 
@@ -41,6 +41,12 @@ namespace chessui {
         void buttonSelected(int row, int col);
 
         void setDefaultGame();
+
+        void setGameOne();
+
+        void setGameTwo();
+
+        void setGameThree();
 
         void swapPlayer();
 

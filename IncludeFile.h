@@ -27,6 +27,7 @@
 #include <QMap>
 #include <QStyleFactory>
 #include <qfontdatabase.h>
+#include <qcombobox.h> 
 
 #include "ui_Projet.h"
 //#include "bibliotheque_cours/bibliotheque_cours.hpp"
