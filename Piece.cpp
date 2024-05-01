@@ -53,7 +53,6 @@ namespace chesslogic {
 											isCheck = true;
 										}
 									}
-
 								}
 							}
 							if (isSafe) {

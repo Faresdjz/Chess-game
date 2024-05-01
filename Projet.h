@@ -42,6 +42,8 @@ namespace chessui {
 
         void setDefaultGame();
 
+        void swapPlayer();
+
 
         QLabel* label;
         QPushButton* buttons[8][8];

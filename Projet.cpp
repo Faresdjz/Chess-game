@@ -120,7 +120,13 @@ namespace chessui{
         board.movePiece(oldX, oldY, newX, newY);
         buttons[oldX][oldY]->setIcon(QIcon(" "));
         buttons[newX][newY]->setIcon(selectedIcon);
-        //board.items[newX][newY]->piece->setPossiblePosition(board.items);
+
+    }
+
+    void Projet::swapPlayer() {
+
+        playerTurn = !playerTurn;
+
 
     }
 
@@ -174,20 +180,24 @@ namespace chessui{
 
                     buttonSelected(row, col);
                     board.updateGame(board.items[row][col]);
-                    playerTurn = !playerTurn;
+
+                    //on veut que le joueur puisse rejouer pour le deuxieme input
+                    swapPlayer();
 
                     //on highlight la case selectionne
-                    //buttons[row][col]->setStyleSheet("QPushButton { background-color: yellow; }");
+                    buttons[row][col]->setStyleSheet("QPushButton { background-color: yellow; }");
 
 
                     for (const auto& elem : board.items[selectedRow][selectedCol]->piece->possiblePosition) {
                         buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: yellow; }");
                     }
                 }
-
             }
         }
+
         else { //deuxieme appui
+
+
 
             for (const auto& elem : board.items[selectedRow][selectedCol]->piece->possiblePosition) {
                 buttons[elem.first][elem.second]->setStyleSheet(" ");
@@ -195,40 +205,32 @@ namespace chessui{
 
             if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->dangerousPosition)) {
 
-                for (const auto& elem : board.items[selectedRow][selectedCol]->piece->dangerousPosition) {
-                    buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: red; }");
-                }
-                playerTurn = !playerTurn;
+                buttons[selectedRow][selectedCol]->setStyleSheet("QPushButton { background-color:red;}");
+                swapPlayer();
             }
 
             else if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
                 
                 movePieceUi(selectedRow, selectedCol, row, col);
 
+                //verifier si le roi est en echec
                 board.updateGame(board.items[row][col]);
 
                 if (board.checkGameSituation(playerTurn)) {
                     movePieceUi(row, col, selectedRow, selectedCol);
-                    playerTurn = !playerTurn;
+                    swapPlayer();
                 }
-
             }
 
             //si on rappuie sur une case invalide on peut rejouer
             else {
-                playerTurn = !playerTurn;
+                swapPlayer();
             }
 
             //reset les couleurs par defaut pour le prochain tour
             buttons[selectedRow][selectedCol]->setStyleSheet("");
             isSelected = false;
-
-
         }
     }
 
 }
-
-//move piece
-    //if king of same color as piece is in dangerous place
-    //moveback piece
