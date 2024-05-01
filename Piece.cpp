@@ -12,19 +12,19 @@
 
 namespace chesslogic {
 
-	Piece::Piece(bool color, TYPE type, Square* items[8][8]) {
+	Piece::Piece(bool color, TYPE type, std::shared_ptr<Square> items[8][8]) {
 
 		setPossiblePosition(items);
 	}
 
 
-	Piece::Piece(bool color, TYPE type, int i, int j, Square* items[8][8])
+	Piece::Piece(bool color, TYPE type, int i, int j, std::shared_ptr<Square>items[8][8])
 		:color(color), type(type), i_(i), j_(j) {
 
 		setPossiblePosition(items);
 	}
 
-	void Piece::setPossiblePosition(Square* items[8][8]) {
+	void Piece::setPossiblePosition(std::shared_ptr<Square> items[8][8]) {
 
 		possiblePosition.clear();
 		dangerousPosition.clear();
@@ -115,23 +115,3 @@ namespace chesslogic {
 
 }
 
-
-
-
-
-
-
-
-
-//reset tous les vecteurs des pieces du joueur concerne
-//faire en sorte d'ajouter que les positions qui fait en sorte que le roi ne soit pas en echec
-
-
-
-//faire un autre switch case specifique pour la situation dechec
-
-
-
-//move piece
-	//if king of same color as piece is in dangerous place
-	//moveback piece

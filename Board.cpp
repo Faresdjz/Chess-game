@@ -12,9 +12,12 @@
 
 Board::Board() {
 
+
+
+
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
-            items[i][j] = new Square(i, j);
+            items[i][j] = std::make_shared<Square>(Square(i, j));
 
         }
     }
@@ -22,7 +25,12 @@ Board::Board() {
 
 void Board::addPiece(int i, int j, TYPE type, bool color) {
 
-    items[i][j]->piece = new chesslogic::Piece(color, type, i, j, items);
+
+    
+    chesslogic::Piece(color, type, i, j, items);
+
+    //items[i][j]->piece = std::make_shared<chesslogic::Piece> std::Piece(color, type, i, j, items);
+    items[i][j].get()->piece = std::make_shared<chesslogic::Piece> (chesslogic::Piece(color, type, i, j, items));
 
     switch (type) {
     case TYPE::king:
@@ -44,7 +52,6 @@ void Board::addPiece(int i, int j, TYPE type, bool color) {
 void Board::removePiece(int i, int j, TYPE type) {
 
     items[i][j]->piece = nullptr;
-    delete items[i][j]->piece;
 
     switch (type) {
     case TYPE::king:
@@ -59,11 +66,11 @@ void Board::removePiece(int i, int j, TYPE type) {
     }
 }
 
-void Board::updateGame(Square* square) {
+void Board::updateGame(std::shared_ptr<Square> square) {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             if (items[i][j]->piece != nullptr) {
-                if (items[i][j] != square) {
+                if (items[i][j].get() != square.get()) {
                     items[i][j]->piece->setPossiblePosition(items);
                 }
             }

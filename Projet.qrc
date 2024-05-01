@@ -6,5 +6,7 @@
         <file>image echec/Chess_plt60.png</file>
         <file>image echec/Chess_rdt60.png</file>
         <file>image echec/Chess_rlt60.png</file>
+        <file>image echec/Chess_blt60.png</file>
+        <file>image echec/Chess_bdt60.png</file>
     </qresource>
 </RCC>

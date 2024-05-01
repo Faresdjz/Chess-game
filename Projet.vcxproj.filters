@@ -21,6 +21,9 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="Bibliotheque cours">
+      <UniqueIdentifier>{87e83aca-55ef-43b8-b0d7-465fce825bd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Projet.qrc">
@@ -49,6 +52,12 @@
     <ClCompile Include="Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bibliotheque_cours\bibliotheque_cours.cpp">
+      <Filter>Bibliotheque cours</Filter>
+    </ClCompile>
+    <ClCompile Include="bibliotheque_cours\verification_allocation.cpp">
+      <Filter>Bibliotheque cours</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IncludeFile.h">
@@ -62,6 +71,18 @@
     </ClInclude>
     <ClInclude Include="Board.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bibliotheque_cours.hpp">
+      <Filter>Bibliotheque cours</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CodeCoverage_bugfix.h">
+      <Filter>Bibliotheque cours</Filter>
+    </ClInclude>
+    <ClInclude Include="include\debogage_memoire.hpp">
+      <Filter>Bibliotheque cours</Filter>
+    </ClInclude>
+    <ClInclude Include="include\verification_allocation.hpp">
+      <Filter>Bibliotheque cours</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

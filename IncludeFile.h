@@ -30,7 +30,8 @@
 #include <qcombobox.h> 
 
 #include "ui_Projet.h"
-//#include "bibliotheque_cours/bibliotheque_cours.hpp"
+
+//#include "bibliotheque_cours.hpp"
 //#include "verification_allocation.hpp"
 //#include "debogage_memoire.hpp"
 
@@ -40,10 +41,10 @@ enum class TYPE {
 
 const QString BlackKing = ":/Projet/image echec/Chess_kdt60.png";
 const QString BlackRook = ":/Projet/image echec/Chess_rdt60.png";
-const QString BlackBishop = ":/Projet/image echec/Chess_pdt60.png";
+const QString BlackBishop = ":/Projet/image echec/Chess_bdt60.png";
 const QString WhiteKing = ":/Projet/image echec/Chess_klt60.png";
 const QString WhiteRook = ":/Projet/image echec/Chess_rlt60.png";
-const QString WhiteBishop = ":/Projet/image echec/Chess_plt60.png";
+const QString WhiteBishop = ":/Projet/image echec/Chess_blt60.png";
 
 
 

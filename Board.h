@@ -19,7 +19,7 @@ public:
 
 	void removePiece(int i, int j, TYPE type);
 
-	void updateGame(Square* square);
+	void updateGame(std::shared_ptr<Square> square);
 
 	void movePiece(int oldX, int oldY, int newX, int newY);
 
@@ -28,5 +28,5 @@ public:
 	int nKings=0;
 	int nBishops=0;
 	int nRooks=0;
-	Square* items[8][8];
+	std::shared_ptr<Square> items[8][8];
 };

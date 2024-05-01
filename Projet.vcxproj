@@ -64,6 +64,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)\googletest\include;$(SolutionDir)\googletest;$(QtINCLUDEPATH);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -89,6 +94,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bibliotheque_cours\bibliotheque_cours.cpp" />
+    <ClCompile Include="bibliotheque_cours\verification_allocation.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Square.cpp" />
     <QtRcc Include="Projet.qrc" />
@@ -101,6 +108,10 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="IncludeFile.h" />
+    <ClInclude Include="include\bibliotheque_cours.hpp" />
+    <ClInclude Include="include\CodeCoverage_bugfix.h" />
+    <ClInclude Include="include\debogage_memoire.hpp" />
+    <ClInclude Include="include\verification_allocation.hpp" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="Square.h" />
   </ItemGroup>

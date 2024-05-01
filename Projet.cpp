@@ -22,7 +22,7 @@ namespace chessui {
         QWidget* windowGrid = new QWidget;
         QWidget* windowText = new QWidget;
 
-        label1 = new QLabel("WHITE, you can play!");
+        label1 = new QLabel("WHITE <br> you can play!");
         label2 = new QLabel("");
 
         label1->setStyleSheet("color: rgba(255, 255, 255, 0.7); font-size: 11pt;");
@@ -126,7 +126,7 @@ namespace chessui {
                 buttons[i][j]->setIcon(iconRessources["WhiteRook"]);
             }
         }
-
+        buttons[i][j]->setIconSize(QSize(40, 40));
 
     }
 
@@ -151,17 +151,17 @@ namespace chessui {
         board.movePiece(oldX, oldY, newX, newY);
         buttons[oldX][oldY]->setIcon(QIcon(" "));
         buttons[newX][newY]->setIcon(selectedIcon);
-
+        buttons[newX][newY]->setIconSize(QSize(40, 40));
     }
 
     void Projet::swapPlayer() {
 
         playerTurn = !playerTurn;
         if (playerTurn) {
-            label1->setText(QString("BLACK, you can play!"));
+            label1->setText(QString("BLACK <br> you can play!"));
         }
         else {
-            label1->setText(QString("WHITE, you can play!"));
+            label1->setText(QString("WHITE <br> you can play!"));
         }
 
     }
