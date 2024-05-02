@@ -19,6 +19,10 @@ namespace chesslogic {
 	class Piece {
 
 	public:
+		Piece() {};
+
+		Piece(const Piece& piece) : color(piece.color), type(piece.type), i_(piece.i_), j_(piece.j_), possiblePosition(piece.possiblePosition) {};
+
 		Piece(bool color, TYPE type, std::shared_ptr<Square> items[8][8]);
 
 		Piece(bool color, TYPE type, int i, int j, std::shared_ptr<Square> items[8][8]);
@@ -32,15 +36,11 @@ namespace chesslogic {
 		void setPossiblePosition(std::shared_ptr<Square> items[8][8]);
 		
 		
-		bool isCheck;
-
-
+		bool isCheck = false;
 		bool color;
 		TYPE type;
 		int i_;
 		int j_;
 		std::vector<std::pair<int, int>> possiblePosition;
-		std::vector <std::pair<int, int>> dangerousPosition;
-
 	};
 }

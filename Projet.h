@@ -54,9 +54,11 @@ namespace chessui {
 
         void resetColorScheme();
 
+        void playMusic();
 
         QLabel* label1;
         QLabel* label2;
+        QMediaPlayer* musicPlayer;
         QPushButton* buttons[8][8];
         Board board;
         QIcon selectedIcon;

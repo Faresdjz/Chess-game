@@ -27,7 +27,6 @@ namespace chesslogic {
 	void Piece::setPossiblePosition(std::shared_ptr<Square> items[8][8]) {
 
 		possiblePosition.clear();
-		dangerousPosition.clear();
 		isCheck = false;
 
 		switch (type) {

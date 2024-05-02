@@ -12,9 +12,6 @@
 
 Board::Board() {
 
-
-
-
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
             items[i][j] = std::make_shared<Square>(Square(i, j));
@@ -27,9 +24,6 @@ void Board::addPiece(int i, int j, TYPE type, bool color) {
 
 
     
-    chesslogic::Piece(color, type, i, j, items);
-
-    //items[i][j]->piece = std::make_shared<chesslogic::Piece> std::Piece(color, type, i, j, items);
     items[i][j].get()->piece = std::make_shared<chesslogic::Piece> (chesslogic::Piece(color, type, i, j, items));
 
     switch (type) {

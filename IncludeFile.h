@@ -26,6 +26,10 @@
 #include <Qstring>
 #include <QMap>
 #include <QStyleFactory>
+#include <QMenu>
+#include <QAction>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include <qfontdatabase.h>
 #include <qcombobox.h> 
 

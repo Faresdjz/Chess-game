@@ -81,12 +81,17 @@ namespace chessui {
 
         QPushButton* startButton = new QPushButton("Start Game");
         textLayout->addWidget(startButton);
-
         connect(startButton, &QPushButton::clicked, this, [this, gameSelector]() {setNewGame(gameSelector); });
+
     }
 
     Projet::~Projet()
     {}
+
+    void Projet::playMusic() {
+
+
+    }
 
     void Projet::loadRessources() {
 
@@ -299,15 +304,28 @@ namespace chessui {
             }
 
             if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
-                
-                movePieceUi(selectedRow, selectedCol, row, col);
+                chesslogic::Piece savedItem;
+                bool wasEmpty;
 
-                //verifier si le roi est en echec
+                if (board.items[row][col].get()->piece.get() != nullptr) {
+                    savedItem=(*(board.items[row][col].get()->piece.get()));
+                    wasEmpty = false;
+                }
+                else {
+                    wasEmpty = true;
+                }
+
+                movePieceUi(selectedRow, selectedCol, row, col);
                 board.updateGame(board.items[row][col]);
+
 
                 if (checkSituationUi()) {
 
+
                     movePieceUi(row, col, selectedRow, selectedCol);
+                    if (wasEmpty == false) {
+                        addPieceUi(savedItem.i_, savedItem.j_, savedItem.type, savedItem.color);
+                    }
                     swapPlayer();
 
                 }
