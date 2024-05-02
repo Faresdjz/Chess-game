@@ -13,15 +13,7 @@
 
 class Square {
 public:
-	Square() {};
-
-	Square(int i, int j)
-		: i_(i), j_(j){};
-
-	void setPosition(int i, int j) {
-		i_ = i;
-		j_ = j;
-	}
+	Square(int i, int j): i_(i), j_(j){};
 
 	bool isPlayable(std::vector <std::pair<int, int>> possiblePosition);
 

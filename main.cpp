@@ -8,22 +8,11 @@
 */
 
 #include "Projet.h"
-#include <QtWidgets/QApplication>
-
-
-#include "bibliotheque_cours.hpp"
-#include "verification_allocation.hpp"
-#include "debogage_memoire.hpp"
 
 int main(int argc, char *argv[])
 {
-
     QApplication a(argc, argv);
-
-
-
     chessui::Projet w;
-    //w.setNewGame();
     w.show();
     return a.exec();
 }

@@ -35,12 +35,12 @@
 
 #include "ui_Projet.h"
 
-//#include "bibliotheque_cours.hpp"
-//#include "verification_allocation.hpp"
-//#include "debogage_memoire.hpp"
+#include "bibliotheque_cours.hpp"
+#include "verification_allocation.hpp"
+#include "debogage_memoire.hpp"
 
 enum class TYPE {
-	king, bishop, rook
+	king, bishop, rook, none
 };
 
 const QString BlackKing = ":/Projet/image echec/Chess_kdt60.png";
@@ -49,6 +49,8 @@ const QString BlackBishop = ":/Projet/image echec/Chess_bdt60.png";
 const QString WhiteKing = ":/Projet/image echec/Chess_klt60.png";
 const QString WhiteRook = ":/Projet/image echec/Chess_rlt60.png";
 const QString WhiteBishop = ":/Projet/image echec/Chess_blt60.png";
+
+const QString highlightSetUp = "QPushButton { background-color: rgba(255, 255, 0, 0.5); border: 1px solid rgba(255, 255, 0, 0.5); }";
 
 
 

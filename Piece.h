@@ -37,10 +37,10 @@ namespace chesslogic {
 		
 		
 		bool isCheck = false;
-		bool color;
-		TYPE type;
-		int i_;
-		int j_;
+		bool color = false;
+		TYPE type = TYPE::none;
+		int i_ = -1;
+		int j_ = -1;
 		std::vector<std::pair<int, int>> possiblePosition;
 	};
 }

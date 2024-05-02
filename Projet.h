@@ -22,7 +22,6 @@ namespace chessui {
     public:
 
         Projet(QWidget* parent = nullptr);
-        ~Projet();
 
         void loadRessources();
 
@@ -55,6 +54,8 @@ namespace chessui {
         void resetColorScheme();
 
         void playMusic();
+
+        void highlightPossiblePosition(int i, int j, bool isOn);
 
         QLabel* label1;
         QLabel* label2;

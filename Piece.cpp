@@ -26,6 +26,7 @@ namespace chesslogic {
 
 	void Piece::setPossiblePosition(std::shared_ptr<Square> items[8][8]) {
 
+		//Initialisation
 		possiblePosition.clear();
 		isCheck = false;
 
@@ -67,9 +68,9 @@ namespace chesslogic {
 					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
 						if (items[newX][newY]->piece) {
 							if (items[newX][newY]->piece->color != color) {
-								possiblePosition.push_back(std::make_pair(newX, newY)); // Capture possible
+								possiblePosition.push_back(std::make_pair(newX, newY));
 								if (items[newX][newY]->piece->type != TYPE::king) {
-									break; // Blocage par une piece, arret dans cette direction
+									break; //Direction is blocked by a piece
 								}
 							}
 							else {
@@ -93,9 +94,9 @@ namespace chesslogic {
 					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
 						if (items[newX][newY]->piece) {
 							if (items[newX][newY]->piece->color != color) {
-								possiblePosition.push_back(std::make_pair(newX, newY)); // Capture possible
+								possiblePosition.push_back(std::make_pair(newX, newY)); 
 								if (items[newX][newY]->piece->type != TYPE::king) {
-									break; // Blocage par une piece, arret dans cette direction
+									break; //Direction is blocked by a piece
 								}
 							}
 							else {

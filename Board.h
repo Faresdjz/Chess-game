@@ -28,5 +28,7 @@ public:
 	int nKings=0;
 	int nBishops=0;
 	int nRooks=0;
+	bool wasEmpty = true;
 	std::shared_ptr<Square> items[8][8];
+	chesslogic::Piece savedItem;
 };
