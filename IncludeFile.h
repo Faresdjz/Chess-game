@@ -43,6 +43,9 @@ enum class TYPE {
 	king, bishop, rook, none
 };
 
+//IMAGE SOURCE:
+//https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent
+
 const QString BlackKing = ":/Projet/image echec/Chess_kdt60.png";
 const QString BlackRook = ":/Projet/image echec/Chess_rdt60.png";
 const QString BlackBishop = ":/Projet/image echec/Chess_bdt60.png";
