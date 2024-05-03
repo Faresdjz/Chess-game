@@ -56,8 +56,6 @@ namespace chesslogic {
 		}
 		
 		std::vector<std::pair<int, int>> possiblePosition;
-		
-		
 
 	private:
 		bool isCheck_ = false;
@@ -65,6 +63,5 @@ namespace chesslogic {
 		int j_ = -1;
 		bool color_ = false;
 		TYPE type_ = TYPE::none;
-		
 	};
 }

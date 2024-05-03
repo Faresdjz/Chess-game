@@ -31,23 +31,24 @@ namespace chesslogic {
 		isCheck_ = false;
 
 		switch (type_) {
-		case TYPE::king:
 
-			for (int dx = -1; dx <= 1; dx++) {
-				for (int dy = -1; dy <= 1; dy++) {
-					int newX = i_ + dx;
-					int newY = j_ + dy;
+			case TYPE::king: {
+				for (int dx = -1; dx <= 1; dx++) {
+					for (int dy = -1; dy <= 1; dy++) {
+						int newX = i_ + dx;
+						int newY = j_ + dy;
 
-					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-						if (items[newX][newY]->piece == nullptr || items[newX][newY]->piece->color_ != color_) {
-							bool isSafe = true;
-							for (int i = 0; i < 8; i++) {
-								for (int j = 0; j < 8; j++) {
-									if (items[i][j]->piece && items[i][j]->piece->color_ != color_) {
-										auto enemyPositions = items[i][j]->piece->possiblePosition;
-										possiblePosition.push_back(std::make_pair(newX, newY));
-										if (std::find(enemyPositions.begin(), enemyPositions.end(), std::make_pair(i_, j_)) != enemyPositions.end()) {
-											isCheck_ = true;
+						if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+							if (items[newX][newY]->piece == nullptr || items[newX][newY]->piece->color_ != color_) {
+								bool isSafe = true;
+								for (int i = 0; i < 8; i++) {
+									for (int j = 0; j < 8; j++) {
+										if (items[i][j]->piece && items[i][j]->piece->color_ != color_) {
+											auto enemyPositions = items[i][j]->piece->possiblePosition;
+											possiblePosition.push_back(std::make_pair(newX, newY));
+											if (std::find(enemyPositions.begin(), enemyPositions.end(), std::make_pair(i_, j_)) != enemyPositions.end()) {
+												isCheck_ = true;
+											}
 										}
 									}
 								}
@@ -55,63 +56,65 @@ namespace chesslogic {
 						}
 					}
 				}
+
+				break;
 			}
 
-			break;
 
-		case TYPE::bishop: {
-			std::vector<std::pair<int, int>> direction = { {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
-			for (const auto& cod : direction) {
-				for (int step = 1; step < 8; step++) {
-					int newX = i_ + cod.first * step;
-					int newY = j_ + cod.second * step;
-					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-						if (items[newX][newY]->piece) {
-							if (items[newX][newY]->piece->color_ != color_) {
-								possiblePosition.push_back(std::make_pair(newX, newY));
-								if (items[newX][newY]->piece->type_ != TYPE::king) {
-									break; //Direction is blocked by a piece
+
+			case TYPE::bishop: {
+				std::vector<std::pair<int, int>> direction = { {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
+				for (const auto& cod : direction) {
+					for (int step = 1; step < 8; step++) {
+						int newX = i_ + cod.first * step;
+						int newY = j_ + cod.second * step;
+						if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+							if (items[newX][newY]->piece) {
+								if (items[newX][newY]->piece->color_ != color_) {
+									possiblePosition.push_back(std::make_pair(newX, newY));
+									if (items[newX][newY]->piece->type_ != TYPE::king) {
+										break; //Direction is blocked by a piece
+									}
 								}
-							}
-							else {
-								break;
-							}
+								else {
+									break;
+								}
 
+							}
+							possiblePosition.push_back(std::make_pair(newX, newY));
 						}
-						possiblePosition.push_back(std::make_pair(newX, newY));
 					}
 				}
+				break;
 			}
-			break;
-		}
 
-		case TYPE::rook:
-			std::vector<std::pair<int, int>> directions = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
-			for (const auto& coord : directions) {
-				for (int step = 1; step < 8; step++) {
-					int newX = i_ + coord.first * step;
-					int newY = j_ + coord.second * step;
-					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-						if (items[newX][newY]->piece) {
-							if (items[newX][newY]->piece->color_ != color_) {
-								possiblePosition.push_back(std::make_pair(newX, newY)); 
-								if (items[newX][newY]->piece->type_ != TYPE::king) {
-									break; //Direction is blocked by a piece
+
+			case TYPE::rook: {
+				std::vector<std::pair<int, int>> directions = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+				for (const auto& coord : directions) {
+					for (int step = 1; step < 8; step++) {
+						int newX = i_ + coord.first * step;
+						int newY = j_ + coord.second * step;
+						if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+							if (items[newX][newY]->piece) {
+								if (items[newX][newY]->piece->color_ != color_) {
+									possiblePosition.push_back(std::make_pair(newX, newY));
+									if (items[newX][newY]->piece->type_ != TYPE::king) {
+										break; //Direction is blocked by a piece
+									}
 								}
-							}
-							else {
-								break;
-							}
+								else {
+									break;
+								}
 
+							}
+							possiblePosition.push_back(std::make_pair(newX, newY));
 						}
-						possiblePosition.push_back(std::make_pair(newX, newY));
 					}
 				}
+				break;
 			}
-			break;
-
 		}
 	}
-
 }
 
