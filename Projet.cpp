@@ -70,10 +70,10 @@ namespace chessui {
                 buttons[i][j]->setMinimumSize(50, 50);
 
                 if ((i + j) % 2 == 0) {
-                    buttons[i][j]->setStyleSheet("background-color: #333333; border: 0;");
+                    buttons[i][j]->setStyleSheet(blackSquareSetUp);
                 }
                 else {
-                    buttons[i][j]->setStyleSheet("background-color: #1C1C1E; border: 0;");
+                    buttons[i][j]->setStyleSheet(lightSquareSetUp);
                 }
                 gridLayout->addWidget(buttons[i][j], i, j);
                 connect(buttons[i][j], &QPushButton::clicked, [this, i, j] { play(i, j); });
@@ -246,7 +246,7 @@ namespace chessui {
             }
         }
         catch (const std::runtime_error& erreur) {
-            std::cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board.nKings;
+            std::cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board.getnKings();
             setDefaultGame();
         }
 
@@ -256,10 +256,10 @@ namespace chessui {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((i + j) % 2 == 0) {
-                    buttons[i][j]->setStyleSheet("background-color: #333333; border: 0;");
+                    buttons[i][j]->setStyleSheet(blackSquareSetUp);
                 }
                 else {
-                    buttons[i][j]->setStyleSheet("background-color: #1C1C1E; border: 0;");
+                    buttons[i][j]->setStyleSheet(lightSquareSetUp);
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace chessui {
     void Projet::highlightPossiblePosition(int i, int j, bool isOn) {
         if (isOn) {
             for (const auto& elem : board.items[i][j]->piece->possiblePosition) {
-                buttons[elem.first][elem.second]->setStyleSheet("QPushButton { background-color: rgba(255, 255, 0, 0.5); border: 1px solid rgba(255, 255, 0, 0.5); }");
+                buttons[elem.first][elem.second]->setStyleSheet(highlightSetUp);
             }
         }
         else {
@@ -302,16 +302,17 @@ namespace chessui {
 
                 if (checkSituationUi()) {
 
-                    if (board.wasEmpty == false) { //If a piece was eaten, we have to put it back
+                    board.updateGame(board.items[row][col]);
+
+                    if (board.getWasEmpty() == false) { //If a piece was eaten, we have to put it back
                         movePieceUi(row, col, selectedRow, selectedCol);
                         addPieceUi(board.savedItem.i_, board.savedItem.j_, board.savedItem.type, board.savedItem.color);
                         swapPlayer();
                     }
-                    else {
+                    else if(checkSituationUi()){
                         movePieceUi(row, col, selectedRow, selectedCol);
                         swapPlayer();
                     }
-
                 }
             }
 

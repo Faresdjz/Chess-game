@@ -51,6 +51,8 @@ const QString WhiteRook = ":/Projet/image echec/Chess_rlt60.png";
 const QString WhiteBishop = ":/Projet/image echec/Chess_blt60.png";
 
 const QString highlightSetUp = "QPushButton { background-color: rgba(255, 255, 0, 0.5); border: 1px solid rgba(255, 255, 0, 0.5); }";
+const QString blackSquareSetUp = "background-color: #333333; border: 0;";
+const QString lightSquareSetUp = "background-color: #1C1C1E; border: 0;";
 
 
 
