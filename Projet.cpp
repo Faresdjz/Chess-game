@@ -309,6 +309,7 @@ namespace chessui {
 
             //If we click on an invalid square, we can play again
             else {
+                secondLabel_->setText(QString("INVALID"));
                 swapPlayer();
             }
 
