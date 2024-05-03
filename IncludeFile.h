@@ -39,7 +39,7 @@
 #include "verification_allocation.hpp"
 #include "debogage_memoire.hpp"
 
-enum class TYPE {
+enum class Type {
 	king, bishop, rook, none
 };
 

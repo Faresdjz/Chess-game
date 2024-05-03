@@ -69,12 +69,7 @@ namespace chessui {
                 buttons_[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
                 buttons_[i][j]->setMinimumSize(50, 50);
 
-                if ((i + j) % 2 == 0) {
-                    buttons_[i][j]->setStyleSheet(blackSquareSetUp);
-                }
-                else {
-                    buttons_[i][j]->setStyleSheet(lightSquareSetUp);
-                }
+                buttons_[i][j]->setStyleSheet((i + j) % 2 == 0 ? blackSquareSetUp : lightSquareSetUp);
                 gridLayout->addWidget(buttons_[i][j], i, j);
                 connect(buttons_[i][j], &QPushButton::clicked, [this, i, j] { play(i, j); });
             }
@@ -92,37 +87,37 @@ namespace chessui {
         iconRessources_["WhiteRook"] = QIcon(WhiteRook);
     }
 
-    void Projet::addPieceUi(int i, int j, TYPE type, bool color) {
+    void Projet::addPieceUi(int i, int j, Type type, bool color) {
 
         //color TRUE-->Black
         //color FALSE-->White
         board_.addPiece(i, j, type, color);
         if (color) {
-            if (type == TYPE::king) {
+            if (type == Type::king) {
                 buttons_[i][j]->setIcon(iconRessources_["BlackKing"]);
             }
-            if (type == TYPE::bishop) {
+            if (type == Type::bishop) {
                 buttons_[i][j]->setIcon(iconRessources_["BlackBishop"]);
             }
-            if (type == TYPE::rook) {
+            if (type == Type::rook) {
                 buttons_[i][j]->setIcon(iconRessources_["BlackRook"]);
             }
         }
         else {
-            if (type == TYPE::king) {
+            if (type == Type::king) {
                 buttons_[i][j]->setIcon(iconRessources_["WhiteKing"]);
             }
-            if (type == TYPE::bishop) {
+            if (type == Type::bishop) {
                 buttons_[i][j]->setIcon(iconRessources_["WhiteBishop"]);
             }
-            if (type == TYPE::rook) {
+            if (type == Type::rook) {
                 buttons_[i][j]->setIcon(iconRessources_["WhiteRook"]);
             }
         }
         buttons_[i][j]->setIconSize(QSize(40, 40));
     }
 
-    void Projet::removePieceUi(int i, int j, TYPE type) {
+    void Projet::removePieceUi(int i, int j, Type type) {
         buttons_[i][j]->setIcon(QIcon(""));
         board_.removePiece(i, j, type);
     }
@@ -175,45 +170,45 @@ namespace chessui {
     void Projet::setDefaultGame() {
         removeAllPieceUi();
 
-        addPieceUi(7, 3, TYPE::king, false);
-        addPieceUi(0, 3, TYPE::king, true);
-        addPieceUi(7, 2, TYPE::bishop, false);
-        addPieceUi(0, 2, TYPE::bishop, true);
-        addPieceUi(7, 4, TYPE::rook, false);
-        addPieceUi(0, 4, TYPE::rook, true);
+        addPieceUi(7, 3, Type::king, false);
+        addPieceUi(0, 3, Type::king, true);
+        addPieceUi(7, 2, Type::bishop, false);
+        addPieceUi(0, 2, Type::bishop, true);
+        addPieceUi(7, 4, Type::rook, false);
+        addPieceUi(0, 4, Type::rook, true);
 
     }
     void Projet::setGameOne(){
         removeAllPieceUi();
 
-        addPieceUi(7, 3, TYPE::king, false);
-        addPieceUi(0, 3, TYPE::king, true);
-        addPieceUi(7, 1, TYPE::bishop, false);
-        addPieceUi(0, 1, TYPE::bishop, true);
-        addPieceUi(7, 5, TYPE::rook, false);
-        addPieceUi(0, 5, TYPE::rook, true);
+        addPieceUi(7, 3, Type::king, false);
+        addPieceUi(0, 3, Type::king, true);
+        addPieceUi(7, 1, Type::bishop, false);
+        addPieceUi(0, 1, Type::bishop, true);
+        addPieceUi(7, 5, Type::rook, false);
+        addPieceUi(0, 5, Type::rook, true);
     }
 
     void Projet::setGameTwo() {
         removeAllPieceUi();
 
-        addPieceUi(7, 4, TYPE::king, false);
-        addPieceUi(0, 2, TYPE::king, true);
-        addPieceUi(7, 6, TYPE::bishop, false);
-        addPieceUi(0, 5, TYPE::bishop, true);
-        addPieceUi(7, 3, TYPE::rook, false);
-        addPieceUi(0, 7, TYPE::rook, true);
+        addPieceUi(7, 4, Type::king, false);
+        addPieceUi(0, 2, Type::king, true);
+        addPieceUi(7, 6, Type::bishop, false);
+        addPieceUi(0, 5, Type::bishop, true);
+        addPieceUi(7, 3, Type::rook, false);
+        addPieceUi(0, 7, Type::rook, true);
     }
 
     void Projet::setGameThree() {
         removeAllPieceUi();
 
-        addPieceUi(7, 4, TYPE::king, false);
-        addPieceUi(0, 2, TYPE::king, true);
-        addPieceUi(7, 7, TYPE::bishop, false);
-        addPieceUi(0, 1, TYPE::bishop, true);
-        addPieceUi(7, 3, TYPE::rook, false);
-        addPieceUi(0, 5, TYPE::rook, true);
+        addPieceUi(7, 4, Type::king, false);
+        addPieceUi(0, 2, Type::king, true);
+        addPieceUi(7, 7, Type::bishop, false);
+        addPieceUi(0, 1, Type::bishop, true);
+        addPieceUi(7, 3, Type::rook, false);
+        addPieceUi(0, 5, Type::rook, true);
     };
 
 
@@ -246,12 +241,7 @@ namespace chessui {
     void Projet::resetColorScheme() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if ((i + j) % 2 == 0) {
-                    buttons_[i][j]->setStyleSheet(blackSquareSetUp);
-                }
-                else {
-                    buttons_[i][j]->setStyleSheet(lightSquareSetUp);
-                }
+                buttons_[i][j]->setStyleSheet((i + j) % 2 == 0 ? blackSquareSetUp : lightSquareSetUp);
             }
         }
     }

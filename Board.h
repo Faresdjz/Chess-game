@@ -15,9 +15,9 @@ class Board {
 public:
 	Board();
 
-	void addPiece(int i, int j, TYPE type, bool color);
+	void addPiece(int i, int j, Type type, bool color);
 
-	void removePiece(int i, int j, TYPE type);
+	void removePiece(int i, int j, Type type);
 
 	void updateGame(std::shared_ptr<Square> square);
 
@@ -25,21 +25,13 @@ public:
 
 	bool checkGameSituation(bool color);
 
-	int getnKings() {
-		return nKings_;
-	}
+	int getnKings();
 
-	int getWasEmpty() {
-		return wasEmpty_;
-	}
+	int getWasEmpty();
 
-	chesslogic::Piece getSavedItem() {
-		return savedItem_;
-	}
+	chesslogic::Piece getSavedItem();
 
-	std::shared_ptr<Square> getItem(int i, int j) {
-		return items[i][j];
-	}
+	std::shared_ptr<Square> getItem(int i, int j);
 
 private:
 	int nKings_ = 0;
@@ -47,5 +39,5 @@ private:
 	int nRooks_ = 0;
 	bool wasEmpty_ = true;
 	chesslogic::Piece savedItem_;
-	std::shared_ptr<Square> items[8][8];
+	std::shared_ptr<Square> items_[8][8];
 };

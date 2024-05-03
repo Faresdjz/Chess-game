@@ -12,13 +12,13 @@
 
 namespace chesslogic {
 
-	Piece::Piece(bool color, TYPE type, std::shared_ptr<Square> items[8][8]) {
+	Piece::Piece(bool color, Type type, std::shared_ptr<Square> items[8][8]) {
 
 		setPossiblePosition(items);
 	}
 
 
-	Piece::Piece(bool color, TYPE type, int i, int j, std::shared_ptr<Square>items[8][8])
+	Piece::Piece(bool color, Type type, int i, int j, std::shared_ptr<Square>items[8][8])
 		:color_(color), type_(type), i_(i), j_(j) {
 
 		setPossiblePosition(items);
@@ -32,7 +32,7 @@ namespace chesslogic {
 
 		switch (type_) {
 
-			case TYPE::king: {
+			case Type::king: {
 				for (int dx = -1; dx <= 1; dx++) {
 					for (int dy = -1; dy <= 1; dy++) {
 						int newX = i_ + dx;
@@ -62,7 +62,7 @@ namespace chesslogic {
 
 
 
-			case TYPE::bishop: {
+			case Type::bishop: {
 				std::vector<std::pair<int, int>> direction = { {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
 				for (const auto& cod : direction) {
 					for (int step = 1; step < 8; step++) {
@@ -72,7 +72,7 @@ namespace chesslogic {
 							if (items[newX][newY]->piece) {
 								if (items[newX][newY]->piece->color_ != color_) {
 									possiblePosition.push_back(std::make_pair(newX, newY));
-									if (items[newX][newY]->piece->type_ != TYPE::king) {
+									if (items[newX][newY]->piece->type_ != Type::king) {
 										break; //Direction is blocked by a piece
 									}
 								}
@@ -89,7 +89,7 @@ namespace chesslogic {
 			}
 
 
-			case TYPE::rook: {
+			case Type::rook: {
 				std::vector<std::pair<int, int>> directions = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
 				for (const auto& coord : directions) {
 					for (int step = 1; step < 8; step++) {
@@ -99,7 +99,7 @@ namespace chesslogic {
 							if (items[newX][newY]->piece) {
 								if (items[newX][newY]->piece->color_ != color_) {
 									possiblePosition.push_back(std::make_pair(newX, newY));
-									if (items[newX][newY]->piece->type_ != TYPE::king) {
+									if (items[newX][newY]->piece->type_ != Type::king) {
 										break; //Direction is blocked by a piece
 									}
 								}
@@ -116,5 +116,33 @@ namespace chesslogic {
 			}
 		}
 	}
+
+
+	void Piece::setPosition(int i, int j, std::shared_ptr<Square> items[8][8]) {
+		i_ = i;
+		j_ = j;
+		setPossiblePosition(items);
+	}
+
+	int Piece::getI() {
+		return i_;
+	}
+
+	int Piece::getJ() {
+		return j_;
+	}
+
+	bool Piece::getColor() {
+		return color_;
+	}
+
+	Type Piece::getType() {
+		return type_;
+	}
+
+	bool Piece::getIsCheck() {
+		return isCheck_;
+	}
+
 }
 

@@ -29,9 +29,9 @@ namespace chessui {
 
         void play(int row, int col);
 
-        void addPieceUi(int i, int j, TYPE type, bool color );
+        void addPieceUi(int i, int j, Type type, bool color );
 
-        void removePieceUi(int i, int j, TYPE type);
+        void removePieceUi(int i, int j, Type type);
 
         void removeAllPieceUi();
 
@@ -54,8 +54,6 @@ namespace chessui {
         void resetColorScheme();
 
         void highlightPossiblePosition(int i, int j, bool isOn);
-
-
 
     private:
         Ui::ProjetClass ui;

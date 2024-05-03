@@ -10,7 +10,6 @@
 
 #pragma once
 #include "IncludeFile.h"
-#include <string>
 
 class Square;
 
@@ -23,38 +22,25 @@ namespace chesslogic {
 
 		Piece(const Piece& piece) : color_(piece.color_), type_(piece.type_), i_(piece.i_), j_(piece.j_), possiblePosition(piece.possiblePosition) {};
 
-		Piece(bool color, TYPE type, std::shared_ptr<Square> items[8][8]);
+		Piece(bool color, Type type, std::shared_ptr<Square> items[8][8]);
 
-		Piece(bool color, TYPE type, int i, int j, std::shared_ptr<Square> items[8][8]);
+		Piece(bool color, Type type, int i, int j, std::shared_ptr<Square> items[8][8]);
 
-		void setPosition(int i, int j, std::shared_ptr<Square> items[8][8]) {
-			i_ = i;
-			j_ = j;
-			setPossiblePosition(items);
-		}
+		void setPosition(int i, int j, std::shared_ptr<Square> items[8][8]);
 
 		void setPossiblePosition(std::shared_ptr<Square> items[8][8]);
 
-		int getI() {
-			return i_;
-		}
+		int getI();
 
-		int getJ() {
-			return j_;
-		}
+		int getJ();
 
-		bool getColor() {
-			return color_;
-		}
+		bool getColor();
 
-		TYPE getType() {
-			return type_;
-		}
+		Type getType();
 
-		bool getIsCheck() {
-			return isCheck_;
-		}
+		bool getIsCheck();
 		
+		//This is in public, because it makes it more readable
 		std::vector<std::pair<int, int>> possiblePosition;
 
 	private:
@@ -62,6 +48,6 @@ namespace chesslogic {
 		int i_ = -1;
 		int j_ = -1;
 		bool color_ = false;
-		TYPE type_ = TYPE::none;
+		Type type_ = Type::none;
 	};
 }
