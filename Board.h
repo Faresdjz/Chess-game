@@ -37,7 +37,9 @@ public:
 		return savedItem_;
 	}
 
-	std::shared_ptr<Square> items[8][8];
+	std::shared_ptr<Square> getItem(int i, int j) {
+		return items[i][j];
+	}
 
 private:
 	int nKings_ = 0;
@@ -45,4 +47,5 @@ private:
 	int nRooks_ = 0;
 	bool wasEmpty_ = true;
 	chesslogic::Piece savedItem_;
+	std::shared_ptr<Square> items[8][8];
 };

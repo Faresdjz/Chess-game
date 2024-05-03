@@ -131,8 +131,8 @@ namespace chessui {
     void Projet::removeAllPieceUi() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (board_.items[i][j]->piece != nullptr) {
-                    removePieceUi(i, j, board_.items[i][j]->piece->getType());
+                if (board_.getItem(i, j)->piece != nullptr) {
+                    removePieceUi(i, j, board_.getItem(i, j)->piece->getType());
                 }
             }
         }
@@ -259,12 +259,12 @@ namespace chessui {
 
     void Projet::highlightPossiblePosition(int i, int j, bool isOn) {
         if (isOn) {
-            for (const auto& elem : board_.items[i][j]->piece->possiblePosition) {
+            for (const auto& elem : board_.getItem(i, j)->piece->possiblePosition) {
                 buttons_[elem.first][elem.second]->setStyleSheet(highlightSetUp);
             }
         }
         else {
-            for (const auto& elem : board_.items[i][j]->piece->possiblePosition) {
+            for (const auto& elem : board_.getItem(i, j)->piece->possiblePosition) {
                 buttons_[elem.first][elem.second]->setStyleSheet("");
             }
         }
@@ -275,9 +275,9 @@ namespace chessui {
     void Projet::play(int row, int col) {
 
         if (!isSelected_) { //First click
-            if (board_.items[row][col]->piece != nullptr && playerTurn_ == board_.items[row][col]->piece->getColor()) {
+            if (board_.getItem(row, col)->piece != nullptr && playerTurn_ == board_.getItem(row, col)->piece->getColor()) {
                 buttonSelected(row, col);
-                board_.updateGame(board_.items[row][col]);
+                board_.updateGame(board_.getItem(row, col));
 
                 buttons_[row][col]->setStyleSheet(highlightSetUp);
                 highlightPossiblePosition(selectedRow_, selectedCol_, true);
@@ -286,14 +286,14 @@ namespace chessui {
         else { //Second click
             highlightPossiblePosition(selectedRow_, selectedCol_, false);
 
-            if (board_.items[row][col]->isPlayable(board_.items[selectedRow_][selectedCol_]->piece->possiblePosition)) {
+            if (board_.getItem(row, col)->isPlayable(board_.getItem(selectedRow_, selectedCol_)->piece->possiblePosition)) {
 
                 movePieceUi(selectedRow_, selectedCol_, row, col);
-                board_.updateGame(board_.items[row][col]);
+                board_.updateGame(board_.getItem(row,col));
 
                 if (checkSituationUi()) {
 
-                    board_.updateGame(board_.items[row][col]);
+                    board_.updateGame(board_.getItem(row,col));
 
                     if (board_.getWasEmpty() == false) { //If a piece was eaten, we have to put it back
                         movePieceUi(row, col, selectedRow_, selectedCol_);
