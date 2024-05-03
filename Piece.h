@@ -34,13 +34,32 @@ namespace chesslogic {
 		}
 
 		void setPossiblePosition(std::shared_ptr<Square> items[8][8]);
+
+		int getI() {
+			return i_;
+		}
+
+		int getJ() {
+			return j_;
+		}
+
+		bool getColor() {
+			return color;
+		}
+
+		TYPE getType() {
+			return type;
+		}
 		
+		std::vector<std::pair<int, int>> possiblePosition;
 		
 		bool isCheck = false;
-		bool color = false;
-		TYPE type = TYPE::none;
+
+	private:
 		int i_ = -1;
 		int j_ = -1;
-		std::vector<std::pair<int, int>> possiblePosition;
+		bool color = false;
+		TYPE type = TYPE::none;
+		
 	};
 }

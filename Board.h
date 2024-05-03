@@ -29,14 +29,6 @@ public:
 		return nKings;
 	}
 
-	int getnBishops() {
-		return nBishops;
-	}
-
-	int getnRooks() {
-		return nRooks;
-	}
-
 	int getWasEmpty() {
 		return wasEmpty;
 	}

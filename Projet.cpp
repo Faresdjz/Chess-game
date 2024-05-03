@@ -141,7 +141,7 @@ namespace chessui {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board.items[i][j]->piece != nullptr) {
-                    removePieceUi(i, j, board.items[i][j]->piece->type);
+                    removePieceUi(i, j, board.items[i][j]->piece->getType());
                 }
             }
         }
@@ -284,7 +284,7 @@ namespace chessui {
     void Projet::play(int row, int col) {
 
         if (!isSelected) { //First click
-            if (board.items[row][col]->piece != nullptr && playerTurn == board.items[row][col]->piece->color) {
+            if (board.items[row][col]->piece != nullptr && playerTurn == board.items[row][col]->piece->getColor()) {
                 buttonSelected(row, col);
                 board.updateGame(board.items[row][col]);
 
@@ -306,7 +306,7 @@ namespace chessui {
 
                     if (board.getWasEmpty() == false) { //If a piece was eaten, we have to put it back
                         movePieceUi(row, col, selectedRow, selectedCol);
-                        addPieceUi(board.savedItem.i_, board.savedItem.j_, board.savedItem.type, board.savedItem.color);
+                        addPieceUi(board.savedItem.getI(), board.savedItem.getJ(), board.savedItem.getType(), board.savedItem.getColor());
                         swapPlayer();
                     }
                     else if(checkSituationUi()){
