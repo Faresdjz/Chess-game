@@ -26,19 +26,23 @@ public:
 	bool checkGameSituation(bool color);
 
 	int getnKings() {
-		return nKings;
+		return nKings_;
 	}
 
 	int getWasEmpty() {
-		return wasEmpty;
+		return wasEmpty_;
+	}
+
+	chesslogic::Piece getSavedItem() {
+		return savedItem_;
 	}
 
 	std::shared_ptr<Square> items[8][8];
-	chesslogic::Piece savedItem;
 
 private:
-	int nKings = 0;
-	int nBishops = 0;
-	int nRooks = 0;
-	bool wasEmpty = true;
+	int nKings_ = 0;
+	int nBishops_ = 0;
+	int nRooks_ = 0;
+	bool wasEmpty_ = true;
+	chesslogic::Piece savedItem_;
 };

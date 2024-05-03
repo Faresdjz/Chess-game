@@ -53,23 +53,21 @@ namespace chessui {
 
         void resetColorScheme();
 
-        void playMusic();
-
         void highlightPossiblePosition(int i, int j, bool isOn);
 
-        QLabel* label1;
-        QLabel* label2;
-        QMediaPlayer* musicPlayer;
-        QPushButton* buttons[8][8];
-        Board board;
-        QIcon selectedIcon;
-        QMap<std::string, QIcon> iconRessources;
-        bool playerTurn = false;
-        bool isSelected = false;
-        int selectedRow = -1;
-        int selectedCol = -1;
+
 
     private:
         Ui::ProjetClass ui;
+        QLabel* firstLabel_;
+        QLabel* secondLabel_;
+        QPushButton* buttons_[8][8];
+        Board board_;
+        QIcon selectedIcon_;
+        QMap<std::string, QIcon> iconRessources_;
+        bool playerTurn_ = false;
+        bool isSelected_ = false;
+        int selectedRow_ = -1;
+        int selectedCol_ = -1;
     };
 }

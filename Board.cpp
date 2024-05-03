@@ -25,17 +25,17 @@ void Board::addPiece(int i, int j, TYPE type, bool color) {
 
     switch (type) {
     case TYPE::king:
-        nKings++;
+        nKings_++;
         break;
     case TYPE::bishop:
-        nBishops++;
+        nBishops_++;
         break;
     case TYPE::rook:
-        nRooks++;
+        nRooks_++;
         break;
     }
 
-    if (nKings > 2) {
+    if (nKings_ > 2) {
         throw std::runtime_error("trop de roi");
     }
 }
@@ -46,13 +46,13 @@ void Board::removePiece(int i, int j, TYPE type) {
 
     switch (type) {
     case TYPE::king:
-        nKings--;
+        nKings_--;
         break;
     case TYPE::bishop:
-        nBishops--;
+        nBishops_--;
         break;
     case TYPE::rook:
-        nRooks--;
+        nRooks_--;
         break;
     }
 }
@@ -74,11 +74,11 @@ void Board::movePiece(int oldX, int oldY, int newX, int newY) {
 
     //Logic for being able to put back a piece that was eaten
     if (items[newX][newY].get()->piece.get() != nullptr) {
-        savedItem = (*(items[newX][newY].get()->piece.get()));
-        wasEmpty = false;
+        savedItem_ = (*(items[newX][newY].get()->piece.get()));
+        wasEmpty_ = false;
     }
     else {
-        wasEmpty = true;
+        wasEmpty_ = true;
     }
 
     items[newX][newY]->piece = items[oldX][oldY]->piece;
@@ -91,7 +91,7 @@ bool Board::checkGameSituation(bool color) {
     //Checking if the piece's king is in check
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8; j++) {
-            if(items[i][j]->piece && items[i][j]->piece->getColor() != color && items[i][j]->piece->isCheck == true) {
+            if(items[i][j]->piece && items[i][j]->piece->getColor() != color && items[i][j]->piece->getIsCheck() == true) {
                 return true;
             }
         }

@@ -19,7 +19,7 @@ namespace chesslogic {
 
 
 	Piece::Piece(bool color, TYPE type, int i, int j, std::shared_ptr<Square>items[8][8])
-		:color(color), type(type), i_(i), j_(j) {
+		:color_(color), type_(type), i_(i), j_(j) {
 
 		setPossiblePosition(items);
 	}
@@ -28,9 +28,9 @@ namespace chesslogic {
 
 		//Initialisation
 		possiblePosition.clear();
-		isCheck = false;
+		isCheck_ = false;
 
-		switch (type) {
+		switch (type_) {
 		case TYPE::king:
 
 			for (int dx = -1; dx <= 1; dx++) {
@@ -39,15 +39,15 @@ namespace chesslogic {
 					int newY = j_ + dy;
 
 					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
-						if (items[newX][newY]->piece == nullptr || items[newX][newY]->piece->color != color) {
+						if (items[newX][newY]->piece == nullptr || items[newX][newY]->piece->color_ != color_) {
 							bool isSafe = true;
 							for (int i = 0; i < 8; i++) {
 								for (int j = 0; j < 8; j++) {
-									if (items[i][j]->piece && items[i][j]->piece->color != color) {
+									if (items[i][j]->piece && items[i][j]->piece->color_ != color_) {
 										auto enemyPositions = items[i][j]->piece->possiblePosition;
 										possiblePosition.push_back(std::make_pair(newX, newY));
 										if (std::find(enemyPositions.begin(), enemyPositions.end(), std::make_pair(i_, j_)) != enemyPositions.end()) {
-											isCheck = true;
+											isCheck_ = true;
 										}
 									}
 								}
@@ -67,9 +67,9 @@ namespace chesslogic {
 					int newY = j_ + cod.second * step;
 					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
 						if (items[newX][newY]->piece) {
-							if (items[newX][newY]->piece->color != color) {
+							if (items[newX][newY]->piece->color_ != color_) {
 								possiblePosition.push_back(std::make_pair(newX, newY));
-								if (items[newX][newY]->piece->type != TYPE::king) {
+								if (items[newX][newY]->piece->type_ != TYPE::king) {
 									break; //Direction is blocked by a piece
 								}
 							}
@@ -93,9 +93,9 @@ namespace chesslogic {
 					int newY = j_ + coord.second * step;
 					if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
 						if (items[newX][newY]->piece) {
-							if (items[newX][newY]->piece->color != color) {
+							if (items[newX][newY]->piece->color_ != color_) {
 								possiblePosition.push_back(std::make_pair(newX, newY)); 
-								if (items[newX][newY]->piece->type != TYPE::king) {
+								if (items[newX][newY]->piece->type_ != TYPE::king) {
 									break; //Direction is blocked by a piece
 								}
 							}

@@ -16,7 +16,7 @@ namespace chessui {
     {
         ui.setupUi(this);
 
-        board = Board();
+        board_ = Board();
         setWindowTitle("CHESS");
 
         //Widget
@@ -40,14 +40,14 @@ namespace chessui {
         windowText->setStyleSheet(QString("border: 3px solid #202020; background-color: #333; "));
 
         //Label settings
-        label1 = new QLabel("WHITE <br> you can play!");
-        label2 = new QLabel("");
-        label1->setStyleSheet("color: rgba(255, 255, 255, 0.7); font-size: 11pt;");
-        label2->setStyleSheet("color: rgba(180, 30, 30, 1); font-size: 12pt;");
-        label1->setAlignment(Qt::AlignCenter); 
-        label2->setAlignment(Qt::AlignCenter);
-        textLayout->addWidget(label1);
-        textLayout->addWidget(label2);
+        firstLabel_ = new QLabel("WHITE <br> you can play!");
+        secondLabel_ = new QLabel("");
+        firstLabel_->setStyleSheet("color: rgba(255, 255, 255, 0.7); font-size: 11pt;");
+        secondLabel_->setStyleSheet("color: rgba(180, 30, 30, 1); font-size: 12pt;");
+        firstLabel_->setAlignment(Qt::AlignCenter); 
+        secondLabel_->setAlignment(Qt::AlignCenter);
+        textLayout->addWidget(firstLabel_);
+        textLayout->addWidget(secondLabel_);
 
         //Game menu setup
         QComboBox* gameSelector = new QComboBox();
@@ -65,120 +65,111 @@ namespace chessui {
         //Buttons setup
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                buttons[i][j] = new QPushButton();
-                buttons[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-                buttons[i][j]->setMinimumSize(50, 50);
+                buttons_[i][j] = new QPushButton();
+                buttons_[i][j]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+                buttons_[i][j]->setMinimumSize(50, 50);
 
                 if ((i + j) % 2 == 0) {
-                    buttons[i][j]->setStyleSheet(blackSquareSetUp);
+                    buttons_[i][j]->setStyleSheet(blackSquareSetUp);
                 }
                 else {
-                    buttons[i][j]->setStyleSheet(lightSquareSetUp);
+                    buttons_[i][j]->setStyleSheet(lightSquareSetUp);
                 }
-                gridLayout->addWidget(buttons[i][j], i, j);
-                connect(buttons[i][j], &QPushButton::clicked, [this, i, j] { play(i, j); });
+                gridLayout->addWidget(buttons_[i][j], i, j);
+                connect(buttons_[i][j], &QPushButton::clicked, [this, i, j] { play(i, j); });
             }
         }
-
-
-
-    }
-
-    void Projet::playMusic() {
-
-
     }
 
     void Projet::loadRessources() {
 
         //Attempt to reduce the lag on first input (preloading ressources)
-        iconRessources["BlackKing"] = QIcon(BlackKing);
-        iconRessources["BlackBishop"] = QIcon(BlackBishop);
-        iconRessources["BlackRook"] = QIcon(BlackRook);
-        iconRessources["WhiteKing"] = QIcon(WhiteKing);
-        iconRessources["WhiteBishop"] = QIcon(WhiteBishop);
-        iconRessources["WhiteRook"] = QIcon(WhiteRook);
+        iconRessources_["BlackKing"] = QIcon(BlackKing);
+        iconRessources_["BlackBishop"] = QIcon(BlackBishop);
+        iconRessources_["BlackRook"] = QIcon(BlackRook);
+        iconRessources_["WhiteKing"] = QIcon(WhiteKing);
+        iconRessources_["WhiteBishop"] = QIcon(WhiteBishop);
+        iconRessources_["WhiteRook"] = QIcon(WhiteRook);
     }
 
     void Projet::addPieceUi(int i, int j, TYPE type, bool color) {
 
         //color TRUE-->Black
         //color FALSE-->White
-        board.addPiece(i, j, type, color);
+        board_.addPiece(i, j, type, color);
         if (color) {
             if (type == TYPE::king) {
-                buttons[i][j]->setIcon(iconRessources["BlackKing"]);
+                buttons_[i][j]->setIcon(iconRessources_["BlackKing"]);
             }
             if (type == TYPE::bishop) {
-                buttons[i][j]->setIcon(iconRessources["BlackBishop"]);
+                buttons_[i][j]->setIcon(iconRessources_["BlackBishop"]);
             }
             if (type == TYPE::rook) {
-                buttons[i][j]->setIcon(iconRessources["BlackRook"]);
+                buttons_[i][j]->setIcon(iconRessources_["BlackRook"]);
             }
         }
         else {
             if (type == TYPE::king) {
-                buttons[i][j]->setIcon(iconRessources["WhiteKing"]);
+                buttons_[i][j]->setIcon(iconRessources_["WhiteKing"]);
             }
             if (type == TYPE::bishop) {
-                buttons[i][j]->setIcon(iconRessources["WhiteBishop"]);
+                buttons_[i][j]->setIcon(iconRessources_["WhiteBishop"]);
             }
             if (type == TYPE::rook) {
-                buttons[i][j]->setIcon(iconRessources["WhiteRook"]);
+                buttons_[i][j]->setIcon(iconRessources_["WhiteRook"]);
             }
         }
-        buttons[i][j]->setIconSize(QSize(40, 40));
-
+        buttons_[i][j]->setIconSize(QSize(40, 40));
     }
 
     void Projet::removePieceUi(int i, int j, TYPE type) {
-        buttons[i][j]->setIcon(QIcon(""));
-        board.removePiece(i, j, type);
+        buttons_[i][j]->setIcon(QIcon(""));
+        board_.removePiece(i, j, type);
     }
 
 
     void Projet::removeAllPieceUi() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (board.items[i][j]->piece != nullptr) {
-                    removePieceUi(i, j, board.items[i][j]->piece->getType());
+                if (board_.items[i][j]->piece != nullptr) {
+                    removePieceUi(i, j, board_.items[i][j]->piece->getType());
                 }
             }
         }
     }
 
     void Projet::movePieceUi(int oldX, int oldY, int newX, int newY) {
-        board.movePiece(oldX, oldY, newX, newY);
-        buttons[oldX][oldY]->setIcon(QIcon(" "));
-        buttons[newX][newY]->setIcon(selectedIcon);
-        buttons[newX][newY]->setIconSize(QSize(40, 40));
+        board_.movePiece(oldX, oldY, newX, newY);
+        buttons_[oldX][oldY]->setIcon(QIcon(" "));
+        buttons_[newX][newY]->setIcon(selectedIcon_);
+        buttons_[newX][newY]->setIconSize(QSize(40, 40));
     }
 
     void Projet::swapPlayer() {
-        playerTurn = !playerTurn;
-        if (playerTurn) {
-            label1->setText(QString("BLACK <br> you can play!"));
+        playerTurn_ = !playerTurn_;
+        if (playerTurn_) {
+            firstLabel_->setText(QString("BLACK <br> you can play!"));
         }
         else {
-            label1->setText(QString("WHITE <br> you can play!"));
+            firstLabel_->setText(QString("WHITE <br> you can play!"));
         }
     }
 
     bool Projet::checkSituationUi() {
-        if (board.checkGameSituation(!playerTurn)) {
-            label2->setText(QString("CHECK"));
+        if (board_.checkGameSituation(!playerTurn_)) {
+            secondLabel_->setText(QString("CHECK"));
             return true;
         }
-        label2->setText(QString(""));
+        secondLabel_->setText(QString(""));
         return false;
     }
 
     void Projet::buttonSelected(int row, int col) {
         //Boolean update for the selection of a piece
-        selectedRow = row;
-        selectedCol = col;
-        selectedIcon = buttons[row][col]->icon();
-        isSelected = true;
+        selectedRow_ = row;
+        selectedCol_ = col;
+        selectedIcon_ = buttons_[row][col]->icon();
+        isSelected_ = true;
     }
 
     void Projet::setDefaultGame() {
@@ -246,7 +237,7 @@ namespace chessui {
             }
         }
         catch (const std::runtime_error& erreur) {
-            std::cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board.getnKings();
+            std::cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board_.getnKings();
             setDefaultGame();
         }
 
@@ -256,10 +247,10 @@ namespace chessui {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((i + j) % 2 == 0) {
-                    buttons[i][j]->setStyleSheet(blackSquareSetUp);
+                    buttons_[i][j]->setStyleSheet(blackSquareSetUp);
                 }
                 else {
-                    buttons[i][j]->setStyleSheet(lightSquareSetUp);
+                    buttons_[i][j]->setStyleSheet(lightSquareSetUp);
                 }
             }
         }
@@ -268,13 +259,13 @@ namespace chessui {
 
     void Projet::highlightPossiblePosition(int i, int j, bool isOn) {
         if (isOn) {
-            for (const auto& elem : board.items[i][j]->piece->possiblePosition) {
-                buttons[elem.first][elem.second]->setStyleSheet(highlightSetUp);
+            for (const auto& elem : board_.items[i][j]->piece->possiblePosition) {
+                buttons_[elem.first][elem.second]->setStyleSheet(highlightSetUp);
             }
         }
         else {
-            for (const auto& elem : board.items[i][j]->piece->possiblePosition) {
-                buttons[elem.first][elem.second]->setStyleSheet("");
+            for (const auto& elem : board_.items[i][j]->piece->possiblePosition) {
+                buttons_[elem.first][elem.second]->setStyleSheet("");
             }
         }
 
@@ -283,34 +274,34 @@ namespace chessui {
 
     void Projet::play(int row, int col) {
 
-        if (!isSelected) { //First click
-            if (board.items[row][col]->piece != nullptr && playerTurn == board.items[row][col]->piece->getColor()) {
+        if (!isSelected_) { //First click
+            if (board_.items[row][col]->piece != nullptr && playerTurn_ == board_.items[row][col]->piece->getColor()) {
                 buttonSelected(row, col);
-                board.updateGame(board.items[row][col]);
+                board_.updateGame(board_.items[row][col]);
 
-                buttons[row][col]->setStyleSheet(highlightSetUp);
-                highlightPossiblePosition(selectedRow, selectedCol, true);
+                buttons_[row][col]->setStyleSheet(highlightSetUp);
+                highlightPossiblePosition(selectedRow_, selectedCol_, true);
             }
         }
         else { //Second click
-            highlightPossiblePosition(selectedRow, selectedCol, false);
+            highlightPossiblePosition(selectedRow_, selectedCol_, false);
 
-            if (board.items[row][col]->isPlayable(board.items[selectedRow][selectedCol]->piece->possiblePosition)) {
+            if (board_.items[row][col]->isPlayable(board_.items[selectedRow_][selectedCol_]->piece->possiblePosition)) {
 
-                movePieceUi(selectedRow, selectedCol, row, col);
-                board.updateGame(board.items[row][col]);
+                movePieceUi(selectedRow_, selectedCol_, row, col);
+                board_.updateGame(board_.items[row][col]);
 
                 if (checkSituationUi()) {
 
-                    board.updateGame(board.items[row][col]);
+                    board_.updateGame(board_.items[row][col]);
 
-                    if (board.getWasEmpty() == false) { //If a piece was eaten, we have to put it back
-                        movePieceUi(row, col, selectedRow, selectedCol);
-                        addPieceUi(board.savedItem.getI(), board.savedItem.getJ(), board.savedItem.getType(), board.savedItem.getColor());
+                    if (board_.getWasEmpty() == false) { //If a piece was eaten, we have to put it back
+                        movePieceUi(row, col, selectedRow_, selectedCol_);
+                        addPieceUi(board_.getSavedItem().getI(), board_.getSavedItem().getJ(), board_.getSavedItem().getType(), board_.getSavedItem().getColor());
                         swapPlayer();
                     }
                     else if(checkSituationUi()){
-                        movePieceUi(row, col, selectedRow, selectedCol);
+                        movePieceUi(row, col, selectedRow_, selectedCol_);
                         swapPlayer();
                     }
                 }
@@ -322,7 +313,7 @@ namespace chessui {
             }
 
             //Setup for next play
-            isSelected = false;
+            isSelected_ = false;
             swapPlayer();
             resetColorScheme();
         }

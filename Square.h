@@ -18,6 +18,8 @@ public:
 	bool isPlayable(std::vector <std::pair<int, int>> possiblePosition);
 
 	std::shared_ptr<chesslogic::Piece> piece;
+
+private:
 	int i_ = -1;
 	int j_ = -1;
 };

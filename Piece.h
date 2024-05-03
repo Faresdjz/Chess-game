@@ -21,7 +21,7 @@ namespace chesslogic {
 	public:
 		Piece() {};
 
-		Piece(const Piece& piece) : color(piece.color), type(piece.type), i_(piece.i_), j_(piece.j_), possiblePosition(piece.possiblePosition) {};
+		Piece(const Piece& piece) : color_(piece.color_), type_(piece.type_), i_(piece.i_), j_(piece.j_), possiblePosition(piece.possiblePosition) {};
 
 		Piece(bool color, TYPE type, std::shared_ptr<Square> items[8][8]);
 
@@ -44,22 +44,27 @@ namespace chesslogic {
 		}
 
 		bool getColor() {
-			return color;
+			return color_;
 		}
 
 		TYPE getType() {
-			return type;
+			return type_;
+		}
+
+		bool getIsCheck() {
+			return isCheck_;
 		}
 		
 		std::vector<std::pair<int, int>> possiblePosition;
 		
-		bool isCheck = false;
+		
 
 	private:
+		bool isCheck_ = false;
 		int i_ = -1;
 		int j_ = -1;
-		bool color = false;
-		TYPE type = TYPE::none;
+		bool color_ = false;
+		TYPE type_ = TYPE::none;
 		
 	};
 }
