@@ -3,7 +3,7 @@
 
 * \file   Piece.cpp
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
-* \date   21 avril 2024
+* \date   3 mai 2024
 * Cree le 13 avril 2024
 */
 
@@ -18,8 +18,7 @@ namespace chesslogic {
 	}
 
 
-	Piece::Piece(bool color, Type type, int i, int j, std::shared_ptr<Square>items[8][8])
-		:color_(color), type_(type), i_(i), j_(j) {
+	Piece::Piece(bool color, Type type, int i, int j, std::shared_ptr<Square>items[8][8]) :color_(color), type_(type), i_(i), j_(j) {
 
 		setPossiblePosition(items);
 	}

@@ -3,7 +3,7 @@
 
 * \file   Projet.cpp
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
-* \date   21 avril 2024
+* \date   3 mai 2024
 * Cree le 13 avril 2024
 */
 
@@ -57,6 +57,7 @@ namespace chessui {
         gameSelector->addItem("Game Three", QVariant(3));
         textLayout->addWidget(gameSelector);
 
+        //Start button setup
         QPushButton* startButton = new QPushButton("Start Game");
         textLayout->addWidget(startButton);
         connect(startButton, &QPushButton::clicked, this, [this, gameSelector]() {setNewGame(gameSelector); });
@@ -118,12 +119,14 @@ namespace chessui {
     }
 
     void Projet::removePieceUi(int i, int j, Type type) {
+
         buttons_[i][j]->setIcon(QIcon(""));
         board_.removePiece(i, j, type);
     }
 
 
     void Projet::removeAllPieceUi() {
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board_.getItem(i, j)->piece != nullptr) {
@@ -134,6 +137,7 @@ namespace chessui {
     }
 
     void Projet::movePieceUi(int oldX, int oldY, int newX, int newY) {
+
         board_.movePiece(oldX, oldY, newX, newY);
         buttons_[oldX][oldY]->setIcon(QIcon(" "));
         buttons_[newX][newY]->setIcon(selectedIcon_);
@@ -141,6 +145,7 @@ namespace chessui {
     }
 
     void Projet::swapPlayer() {
+
         playerTurn_ = !playerTurn_;
         if (playerTurn_) {
             firstLabel_->setText(QString("BLACK <br> you can play!"));
@@ -151,6 +156,7 @@ namespace chessui {
     }
 
     bool Projet::checkSituationUi() {
+
         if (board_.checkGameSituation(!playerTurn_)) {
             secondLabel_->setText(QString("CHECK"));
             return true;
@@ -160,6 +166,7 @@ namespace chessui {
     }
 
     void Projet::buttonSelected(int row, int col) {
+
         //Boolean update for the selection of a piece
         selectedRow_ = row;
         selectedCol_ = col;
@@ -168,8 +175,8 @@ namespace chessui {
     }
 
     void Projet::setDefaultGame() {
-        removeAllPieceUi();
 
+        removeAllPieceUi();
         addPieceUi(7, 3, Type::king, false);
         addPieceUi(0, 3, Type::king, true);
         addPieceUi(7, 2, Type::bishop, false);
@@ -179,8 +186,8 @@ namespace chessui {
 
     }
     void Projet::setGameOne(){
-        removeAllPieceUi();
 
+        removeAllPieceUi();
         addPieceUi(7, 3, Type::king, false);
         addPieceUi(0, 3, Type::king, true);
         addPieceUi(7, 1, Type::bishop, false);
@@ -190,8 +197,8 @@ namespace chessui {
     }
 
     void Projet::setGameTwo() {
-        removeAllPieceUi();
 
+        removeAllPieceUi();
         addPieceUi(7, 4, Type::king, false);
         addPieceUi(0, 2, Type::king, true);
         addPieceUi(7, 6, Type::bishop, false);
@@ -201,8 +208,8 @@ namespace chessui {
     }
 
     void Projet::setGameThree() {
-        removeAllPieceUi();
 
+        removeAllPieceUi();
         addPieceUi(7, 4, Type::king, false);
         addPieceUi(0, 2, Type::king, true);
         addPieceUi(7, 7, Type::bishop, false);
@@ -215,7 +222,6 @@ namespace chessui {
     void Projet::setNewGame(QComboBox* option) {
 
         loadRessources();
-
         try {
             switch (option->currentData().toInt()) {
             case 1:
@@ -235,10 +241,10 @@ namespace chessui {
             std::cout << "Erreur lors de l'ajout des pieces: " << erreur.what() << " il y en a: " << board_.getnKings();
             setDefaultGame();
         }
-
     }
 
     void Projet::resetColorScheme() {
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 buttons_[i][j]->setStyleSheet((i + j) % 2 == 0 ? blackSquareSetUp : lightSquareSetUp);
@@ -248,6 +254,7 @@ namespace chessui {
 
 
     void Projet::highlightPossiblePosition(int i, int j, bool isOn) {
+
         if (isOn) {
             for (const auto& elem : board_.getItem(i, j)->piece->possiblePosition) {
                 buttons_[elem.first][elem.second]->setStyleSheet(highlightSetUp);
@@ -258,11 +265,15 @@ namespace chessui {
                 buttons_[elem.first][elem.second]->setStyleSheet("");
             }
         }
-
     }
 
 
     void Projet::play(int row, int col) {
+
+
+        /* README */
+        /*  Le jeu fonctionne parfaitement, sauf pour une seule situation bien precise.Pour les pieces noires SEULEMENT, on peut bouger une piece qui mettra */
+        /*  son roi en echec, alors que pour les pieces blanches, cette situation est pris en compte par le detecteur d'echec. Sinon, le reste marche comme prevu.*/
 
         if (!isSelected_) { //First click
             if (board_.getItem(row, col)->piece != nullptr && playerTurn_ == board_.getItem(row, col)->piece->getColor()) {
@@ -275,16 +286,13 @@ namespace chessui {
         }
         else { //Second click
             highlightPossiblePosition(selectedRow_, selectedCol_, false);
-
             if (board_.getItem(row, col)->isPlayable(board_.getItem(selectedRow_, selectedCol_)->piece->possiblePosition)) {
 
                 movePieceUi(selectedRow_, selectedCol_, row, col);
                 board_.updateGame(board_.getItem(row,col));
-
                 if (checkSituationUi()) {
 
                     board_.updateGame(board_.getItem(row,col));
-
                     if (board_.getWasEmpty() == false) { //If a piece was eaten, we have to put it back
                         movePieceUi(row, col, selectedRow_, selectedCol_);
                         addPieceUi(board_.getSavedItem().getI(), board_.getSavedItem().getJ(), board_.getSavedItem().getType(), board_.getSavedItem().getColor());

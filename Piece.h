@@ -1,10 +1,9 @@
 /**
 * Fichier declarant la classe Piece ainsi que ses fonctions permettant de creer une piece et ses attributs et de definir ses potentiels mouvements dependamment de son type. 
 
-
 * \file   Piece.h
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
-* \date   21 avril 2024
+* \date   3 mai 2024
 * Cree le 13 avril 2024
 */
 
@@ -39,8 +38,7 @@ namespace chesslogic {
 		Type getType();
 
 		bool getIsCheck();
-		
-		//This is in public, because it makes it more readable
+
 		std::vector<std::pair<int, int>> possiblePosition;
 
 	private:

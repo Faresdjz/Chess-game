@@ -3,7 +3,7 @@
 
 * \file   Board.cpp
 * \author Fares Laadjel 2297799 et Ayoub Marfouk 2295178
-* \date   21 avril 2024
+* \date   3 mai 2024
 * Cree le 13 avril 2024
 */
 
@@ -34,7 +34,6 @@ void Board::addPiece(int i, int j, Type type, bool color) {
         nRooks_++;
         break;
     }
-
     if (nKings_ > 2) {
         throw std::runtime_error("trop de roi");
     }
